@@ -2,13 +2,16 @@
 <img src="/doc/image/logo.png"/>
 </div>
 
-## LibDriver ADS1115
+## LibDriver AT24CXX
 
 [English](/README.md) | [ 简体中文](/README_CN.md)
 
+AT24CXX is the EEPROM of IIC bus launched by Microchip. It supports 1.7v-5.5v power supply range, IIC standard mode (100kHz), fast mode (400kHz) and high speed mode (1MHz).
+
+LibDriver AT24CXX is the full function driver of AT24CXX launched by LibDriver. AT24CXX provides EEPROM write and read functions.
+
 ### Table of Contents
 
-  - [Description](#Description)
   - [Instruction](#Instruction)
   - [Install](#Install)
   - [Usage](#Usage)
@@ -17,13 +20,6 @@
   - [Contributing](#Contributing)
   - [License](#License)
   - [Contact Us](#Contact-Us)
-
-
-### Description
-
-AT24CXX is the EEPROM of IIC bus launched by Microchip. It supports 1.7v-5.5v power supply range, IIC standard mode (100kHz), fast mode (400kHz) and high speed mode (1MHz).
-
-LibDriver AT24CXX is the full function driver of AT24CXX launched by LibDriver. AT24CXX provides EEPROM write and read functions.
 
 ### Instruction
 
