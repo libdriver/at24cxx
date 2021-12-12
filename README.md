@@ -4,7 +4,7 @@
 
 ## LibDriver AT24CXX
 
-[English](/README.md) | [ 简体中文](/README_CN.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
 
 AT24CXX is the EEPROM of IIC bus launched by Microchip. It supports 1.7v-5.5v power supply range, IIC standard mode (100kHz), fast mode (400kHz) and high speed mode (1MHz).
 
@@ -104,7 +104,7 @@ Please sent an e-mail to lishifenging@outlook.com
 
 ### License
 
-Copyright (C) LibDriver 2015-2021 All rights reserved 
+Copyright (c) 2015 - present LibDriver All rights reserved
 
 
 

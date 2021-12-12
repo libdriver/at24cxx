@@ -4,7 +4,7 @@
 
 ## LibDriver AT24CXX
 
-[English](/README.md) | [ 简体中文](/README_CH.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
 
 AT24CXX是美国微芯半导体推出的IIC总线的EEPROM。它支持1.7V-5.5V的供电范围、支持IIC标准模式(100KHz)、快速模式(400KHz)和高速模式(1MHz)。
 
@@ -104,7 +104,7 @@ return 0;
 
 ### 版权
 
-版权(C) LibDriver 2015-2021 版权所有
+版权 (c) 2015 - 现在 LibDriver 版权所有
 
 MIT 许可证（MIT）
 
