@@ -51,10 +51,10 @@ static at24cxx_handle_t gs_handle;        /**< at24cxx handle */
  */
 uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
 {
-    volatile uint8_t res, i, j;
-    volatile uint8_t buf[12];
-    volatile uint8_t buf_check[12];
-    volatile uint16_t inc;
+    uint8_t res, i, j;
+    uint8_t buf[12];
+    uint8_t buf_check[12];
+    uint16_t inc;
     at24cxx_info_t info;
     
     /* link interface function */
@@ -70,7 +70,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* get information */
     res = at24cxx_info(&info);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: get info failed.\n");
        
@@ -92,7 +92,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* set chip type */
     res = at24cxx_set_type(&gs_handle, type);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: set type failed.\n");
        
@@ -101,7 +101,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* set iic addr pin */
     res = at24cxx_set_addr_pin(&gs_handle, address);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: set address pin failed.\n");
        
@@ -110,7 +110,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* at24cxx init */
     res = at24cxx_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: init failed.\n");
        
@@ -119,30 +119,30 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* start read test */
     at24cxx_interface_debug_print("at24cxx: start read test.\n");
-    inc = (type + 1) / 8;
-    for (i=0; i<8; i++)
+    inc = ((uint16_t)type + 1) / 8;
+    for (i = 0; i < 8; i++)
     {
-        for (j=0; j<12; j++)
+        for (j = 0; j < 12; j++)
         {
-            buf[j] = rand()%256;
+            buf[j] = (uint8_t)(rand() % 256);
         }
     
         /* write data */
         res = at24cxx_write(&gs_handle, i*inc, (uint8_t *)buf, 12);
-        if (res)
+        if (res != 0)
         {
             at24cxx_interface_debug_print("at24cxx: write failed.\n");
-            at24cxx_deinit(&gs_handle);
+            (void)at24cxx_deinit(&gs_handle);
             
             return 1;
         }
 
         /* read data */
         res = at24cxx_read(&gs_handle, i*inc, (uint8_t *)buf_check, 12);
-        if (res)
+        if (res != 0)
         {
             at24cxx_interface_debug_print("at24cxx: read failed.\n");
-            at24cxx_deinit(&gs_handle);
+            (void)at24cxx_deinit(&gs_handle);
             
             return 1;
         }
@@ -152,7 +152,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
             if (buf[j] != buf_check[j])
             {
                 at24cxx_interface_debug_print("at24cxx: check error.\n");
-                at24cxx_deinit(&gs_handle);
+                (void)at24cxx_deinit(&gs_handle);
                 
                 return 1;
             }
@@ -162,7 +162,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
 
     /* finish read test */
     at24cxx_interface_debug_print("at24cxx: finish read test.\n");
-    at24cxx_deinit(&gs_handle);
+    (void)at24cxx_deinit(&gs_handle);
     
     return 0;
 }

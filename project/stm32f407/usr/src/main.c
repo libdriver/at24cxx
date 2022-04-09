@@ -185,7 +185,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                 address = (at24cxx_address_t)atoi(argv[6]);
                 
                 /* run read test */
-                if (at24cxx_read_test(type, address))
+                if (at24cxx_read_test(type, address) != 0)
                 {
                     return 1;
                 }
@@ -216,9 +216,9 @@ uint8_t at24cxx(uint8_t argc, char **argv)
             /* read function */
             if (strcmp("read", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint8_t data;
-                volatile uint16_t reg_address;
+                uint8_t res;
+                uint8_t data;
+                uint16_t reg_address;
                 at24cxx_t type;
                 at24cxx_address_t address;
                 
@@ -319,14 +319,14 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                     reg_address += (argv[7][3] - 'A' + 10);
                 }
                 res = at24cxx_basic_init(type, address);
-                if (res)
+                if (res != 0)
                 {
                     return 1;
                 }
                 res = at24cxx_basic_read(reg_address, (uint8_t *)&data, 1);
-                if (res)
+                if (res != 0)
                 {
-                    at24cxx_basic_deinit();
+                    (void)at24cxx_basic_deinit();
                     
                     return 1;
                 }
@@ -334,7 +334,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                 {
                     at24cxx_interface_debug_print("at24cxx: read 0x%04x is 0x%02X.\n", reg_address, data);
                 }
-                at24cxx_basic_deinit();
+                (void)at24cxx_basic_deinit();
                 
                 return 0;
             }
@@ -360,9 +360,9 @@ uint8_t at24cxx(uint8_t argc, char **argv)
             /* write function */
             if (strcmp("write", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint8_t data;
-                volatile uint16_t reg_address;
+                uint8_t res;
+                uint8_t data;
+                uint16_t reg_address;
                 at24cxx_t type;
                 at24cxx_address_t address;
                 
@@ -480,14 +480,14 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                     data += (argv[8][1] - 'A' + 10);
                 }
                 res = at24cxx_basic_init(type, address);
-                if (res)
+                if (res != 0)
                 {
                     return 1;
                 }
                 res = at24cxx_basic_write(reg_address, (uint8_t *)&data, 1);
-                if (res)
+                if (res != 0)
                 {
-                    at24cxx_basic_deinit();
+                    (void)at24cxx_basic_deinit();
                     
                     return 1;
                 }
@@ -495,7 +495,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                 {
                     at24cxx_interface_debug_print("at24cxx: write 0x%04x is 0x%02X.\n", reg_address, data);
                 }
-                at24cxx_basic_deinit();
+                (void)at24cxx_basic_deinit();
                 
                 return 0;
             }
@@ -527,7 +527,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
  */
 int main(void)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     /* stm32f407 clock init and hal init */
     clock_init();
