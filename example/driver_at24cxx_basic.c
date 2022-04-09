@@ -50,7 +50,7 @@ static at24cxx_handle_t gs_handle;        /**< at24cxx handle */
  */
 uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
 {
-    volatile uint8_t res;
+    uint8_t res;
     
     /* link interface function */
     DRIVER_AT24CXX_LINK_INIT(&gs_handle, at24cxx_handle_t);
@@ -65,7 +65,7 @@ uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
     
     /* set chip type */
     res = at24cxx_set_type(&gs_handle, type);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: set type failed.\n");
        
@@ -74,7 +74,7 @@ uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
     
     /* set addr pin */
     res = at24cxx_set_addr_pin(&gs_handle, address);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: set address pin failed.\n");
        
@@ -83,7 +83,7 @@ uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
     
     /* at24cxx init */
     res = at24cxx_init(&gs_handle);
-    if (res)
+    if (res != 0)
     {
         at24cxx_interface_debug_print("at24cxx: init failed.\n");
        
@@ -106,7 +106,7 @@ uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
 uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len)
 {
     /* read data */
-    if (at24cxx_read(&gs_handle, address, buf, len))
+    if (at24cxx_read(&gs_handle, address, buf, len) != 0)
     {
         return 1;
     }
@@ -129,7 +129,7 @@ uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len)
 uint8_t at24cxx_basic_write(uint16_t address, uint8_t *buf, uint16_t len)
 {
     /* read data */
-    if (at24cxx_write(&gs_handle, address, buf, len))
+    if (at24cxx_write(&gs_handle, address, buf, len) != 0)
     {
         return 1;
     }
@@ -149,7 +149,7 @@ uint8_t at24cxx_basic_write(uint16_t address, uint8_t *buf, uint16_t len)
 uint8_t at24cxx_basic_deinit(void)
 {
     /* at24cxx deinit */
-    if (at24cxx_deinit(&gs_handle))
+    if (at24cxx_deinit(&gs_handle) != 0)
     {
         return 1;
     }

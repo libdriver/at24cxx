@@ -35,8 +35,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_AT24CXX_H_
-#define _DRIVER_AT24CXX_H_
+#ifndef DRIVER_AT24CXX_H
+#define DRIVER_AT24CXX_H
 
 #include <stdio.h>
 #include <stdint.h>
@@ -101,7 +101,7 @@ typedef struct at24cxx_handle_s
     uint8_t (*iic_read_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);         /**< point to a iic_read_address16 function address */
     uint8_t (*iic_write_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);        /**< point to a iic_write_address16 function address */
     void (*delay_ms)(uint32_t ms);                                                                 /**< point to a delay_ms function address */
-    uint16_t (*debug_print)(char *fmt, ...);                                                       /**< point to a debug_print function address */
+    void (*debug_print)(const char *const fmt, ...);                                               /**< point to a debug_print function address */
     uint16_t id;                                                                                   /**< chip id */
     uint8_t inited;                                                                                /**< inited flag */
 } at24cxx_handle_t;

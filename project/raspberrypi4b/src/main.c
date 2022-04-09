@@ -36,7 +36,7 @@
 
 #include "driver_at24cxx_read_test.h"
 #include "driver_at24cxx_basic.h"
-#include "iic.h"
+#include <stdlib.h>
 
 /**
  * @brief     at24cxx full function
@@ -206,9 +206,9 @@ uint8_t at24cxx(uint8_t argc, char **argv)
             /* read function */
             if (strcmp("read", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint8_t data;
-                volatile uint16_t reg_address;
+                uint8_t res;
+                uint8_t data;
+                uint16_t reg_address;
                 at24cxx_t type;
                 at24cxx_address_t address;
                 
@@ -350,9 +350,9 @@ uint8_t at24cxx(uint8_t argc, char **argv)
             /* write function */
             if (strcmp("write", argv[2]) == 0)
             {
-                volatile uint8_t res;
-                volatile uint8_t data;
-                volatile uint16_t reg_address;
+                uint8_t res;
+                uint8_t data;
+                uint16_t reg_address;
                 at24cxx_t type;
                 at24cxx_address_t address;
                 

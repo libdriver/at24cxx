@@ -1,6 +1,6 @@
 var driver__at24cxx__interface__template_8c =
 [
-    [ "at24cxx_interface_debug_print", "group__at24cxx__interface__driver.html#gaa8a7509971feff6c010721819e9bc997", null ],
+    [ "at24cxx_interface_debug_print", "group__at24cxx__interface__driver.html#ga6d221cad6d9994b22c20214e5c8a9f0b", null ],
     [ "at24cxx_interface_delay_ms", "group__at24cxx__interface__driver.html#ga9facfd3df0bf2e69af272483aa57641e", null ],
     [ "at24cxx_interface_iic_deinit", "group__at24cxx__interface__driver.html#ga5c1a36bf33c79f5e09e73aad53d3d82b", null ],
     [ "at24cxx_interface_iic_init", "group__at24cxx__interface__driver.html#ga040d36316925e78b85232ca230d0fcda", null ],

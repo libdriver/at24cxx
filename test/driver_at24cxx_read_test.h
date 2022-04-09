@@ -35,8 +35,8 @@
  * </table>
  */
 
-#ifndef _DRIVER_AT24CXX_READ_TEST_H_
-#define _DRIVER_AT24CXX_READ_TEST_H_
+#ifndef DRIVER_AT24CXX_READ_TEST_H
+#define DRIVER_AT24CXX_READ_TEST_H
 
 #include "driver_at24cxx_interface.h"
 

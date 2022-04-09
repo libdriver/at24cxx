@@ -1,4 +1,4 @@
-[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md)
+[English](/README.md) | [ 简体中文](/README_zh-Hans.md) | [繁體中文](/README_zh-Hant.md) | [日本語](/README_ja.md) | [Deutsch](/README_de.md) | [한국어](/README_ko.md)
 
 <div align=center>
 <img src="/doc/image/logo.png"/>
@@ -6,11 +6,11 @@
 
 ## LibDriver AT24CXX
 
-[![API](https://img.shields.io/badge/api-reference-blue)](https://www.libdriver.com/docs/at24cxx/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
+[![MISRA](https://img.shields.io/badge/misra-compliant-brightgreen.svg)](/misra/README.md) [![API](https://img.shields.io/badge/api-reference-blue.svg)](https://www.libdriver.com/docs/at24cxx/index.html) [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](/LICENSE)
 
 AT24CXX是美国微芯半导体推出的IIC总线的EEPROM。它支持1.7V-5.5V的供电范围、支持IIC标准模式(100KHz)、快速模式(400KHz)和高速模式(1MHz)。
 
-LibDriver AT24CXX是LibDriver推出的AT24CXX的全功能驱动，该驱动提供EEPROM写入和读取功能。
+LibDriver AT24CXX是LibDriver推出的AT24CXX的全功能驱动，该驱动提供EEPROM写入和读取功能并且它符合MISRA标准。
 
 ### 目录
 
