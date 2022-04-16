@@ -54,7 +54,7 @@ uint8_t res;
 uint8_t data;
 
 res = at24cxx_basic_init(AT24C01, AT24CXX_ADDRESS_A000);
-if (res)
+if (res != 0)
 {
     return 1;
 }
@@ -62,9 +62,9 @@ if (res)
 ...
 
 res = at24cxx_basic_read(0x00, (uint8_t *)&data, 1);
-if (res)
+if (res != 0)
 {
-    at24cxx_basic_deinit();
+    (void)at24cxx_basic_deinit();
 
     return 1;
 }
@@ -76,9 +76,9 @@ else
 ...
 
 res = at24cxx_basic_write(0x00, (uint8_t *)&data, 1);
-if (res)
+if (res != 0)
 {
-    at24cxx_basic_deinit();
+    (void)at24cxx_basic_deinit();
 
     return 1;
 }
@@ -89,7 +89,7 @@ else
 
 ...
 
-at24cxx_basic_deinit();
+(void)at24cxx_basic_deinit();
 
 return 0;
 ```
