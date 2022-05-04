@@ -26,15 +26,15 @@ LibDriver AT24CXX ist der Treiber mit vollem Funktionsumfang von AT24CXX, der vo
 
 /src enthält LibDriver AT24CXX-Quelldateien.
 
-/interface enthält die plattformunabhängige Vorlage LibDriver AT24CXX IIC。
+/interface enthält die plattformunabhängige Vorlage LibDriver AT24CXX IIC.
 
-/test enthält den Testcode des LibDriver AT24CXX-Treibers und dieser Code kann die erforderliche Funktion des Chips einfach testen。
+/test enthält den Testcode des LibDriver AT24CXX-Treibers und dieser Code kann die erforderliche Funktion des Chips einfach testen.
 
 /example enthält LibDriver AT24CXX-Beispielcode.
 
 /doc enthält das LibDriver AT24CXX-Offlinedokument.
 
-/Datenblatt enthält AT24CXX-Datenblatt。
+/Datenblatt enthält AT24CXX-Datenblatt.
 
 /project enthält den allgemeinen Beispielcode für Linux- und MCU-Entwicklungsboards. Alle Projekte verwenden das Shell-Skript, um den Treiber zu debuggen, und die detaillierten Anweisungen finden Sie in der README.md jedes Projekts.
 
