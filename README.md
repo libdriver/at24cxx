@@ -27,15 +27,15 @@ LibDriver AT24CXX is the full function driver of AT24CXX launched by LibDriver. 
 
 /src includes LibDriver AT24CXX source files.
 
-/interface includes LibDriver AT24CXX IIC platform independent template。
+/interface includes LibDriver AT24CXX IIC platform independent template.
 
-/test includes LibDriver AT24CXX driver test code and this code can test the chip necessary function simply。
+/test includes LibDriver AT24CXX driver test code and this code can test the chip necessary function simply.
 
 /example includes LibDriver AT24CXX sample code.
 
 /doc includes LibDriver AT24CXX offline document.
 
-/datasheet includes AT24CXX datasheet。
+/datasheet includes AT24CXX datasheet.
 
 /project includes the common Linux and MCU development board sample code. All projects use the shell script to debug the driver and the detail instruction can be found in each project's README.md.
 
@@ -50,6 +50,8 @@ Add /src, /interface and /example to your project.
 #### example basic
 
 ```C
+#include "driver_at24cxx_basic.h"
+
 uint8_t res;
 uint8_t data;
 

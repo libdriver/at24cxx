@@ -50,6 +50,8 @@ LibDriver AT24CXX是LibDriver推出的AT24CXX的全功能驱动，该驱动提�
 #### example basic
 
 ```C
+#include "driver_at24cxx_basic.h"
+
 uint8_t res;
 uint8_t data;
 
