@@ -1,22 +1,78 @@
-### 1. chip
+### 1. Chip
 
-#### 1.1 chip info
+#### 1.1 Chip Info
 
-chip name : Raspberry Pi 4B
+chip name : Raspberry Pi 4B.
 
-iic pin: SCL/SDA GPIO3/GPIO2
+iic pin: SCL/SDA GPIO3/GPIO2.
 
-### 2. install
+### 2. Install
 
-#### 2.1 install info
+#### 2.1 Dependencies
+
+Install the necessary dependencies.
+
+```shell
+sudo apt-get install libgpiod-dev pkg-config cmake -y
+```
+
+#### 2.2 Makefile
+
+Build the project.
 
 ```shell
 make
 ```
 
-### 3. at24cxx
+Install the project and this is optional.
 
-#### 3.1 command Instruction
+```shell
+sudo make install
+```
+
+Uninstall the project and this is optional.
+
+```shell
+sudo make uninstall
+```
+
+#### 2.3 CMake
+
+Build the project.
+
+```shell
+mkdir build && cd build 
+cmake .. 
+make
+```
+
+Install the project and this is optional.
+
+```shell
+sudo make install
+```
+
+Uninstall the project and this is optional.
+
+```shell
+sudo make uninstall
+```
+
+Test the project and this is optional.
+
+```shell
+make test
+```
+
+Find the compiled library in CMake. 
+
+```cmake
+find_package(at24cxx REQUIRED)
+```
+
+### 3. AT24CXX
+
+#### 3.1 Command Instruction
 
 ​          at24cxx is a basic command which can test all at24cxx driver function:
 
@@ -34,7 +90,7 @@ make
 
 ​           -c write -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr> <data>        run at24cxx write function.data is hexadecimal.
 
-#### 3.2 command example
+#### 3.2 Command Example
 
 ```shell
 ./at24cxx -i

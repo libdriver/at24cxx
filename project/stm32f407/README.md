@@ -1,6 +1,6 @@
-### 1. chip
+### 1. Chip
 
-#### 1.1 chip info
+#### 1.1 Chip Info
 
 chip name : STM32F407ZGT6.
 
@@ -10,23 +10,23 @@ uart pin: TX/RX PA9/PA10.
 
 iic pin: SCL/SDA PB8/PB9.
 
-### 2. shell
+### 2. Shell
 
-#### 2.1 shell parameter
+#### 2.1 Shell Parameter
 
-baud rate: 115200
+baud rate: 115200.
 
-data bits : 8
+data bits : 8.
 
-stop bits: 1
+stop bits: 1.
 
-parity: none
+parity: none.
 
-flow control: none
+flow control: none.
 
-### 3. at24cxx
+### 3. AT24CXX
 
-#### 3.1 command Instruction
+#### 3.1 Command Instruction
 
 ​          at24cxx is a basic command which can test all at24cxx driver function:
 
@@ -44,7 +44,7 @@ flow control: none
 
 ​           -c write -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr> <data>        run at24cxx write function.data is hexadecimal.
 
-#### 3.2 command example
+#### 3.2 Command Example
 
 ```shell
 at24cxx -i
