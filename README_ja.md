@@ -50,6 +50,8 @@ LibDriver AT24CXXは、LibDriverによって起動されたAT24CXXの全機能�
 #### example basic
 
 ```C
+#include "driver_at24cxx_basic.h"
+
 uint8_t res;
 uint8_t data;
 

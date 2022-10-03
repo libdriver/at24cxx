@@ -50,6 +50,8 @@ LibDriver AT24CXX는 LibDriver에서 출시한 AT24CXX의 전체 기능 드라�
 #### example basic
 
 ```C
+#include "driver_at24cxx_basic.h"
+
 uint8_t res;
 uint8_t data;
 
