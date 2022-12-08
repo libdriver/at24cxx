@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2015 - present LibDriver All rights reserved
- * 
+ *
  * The MIT License (MIT)
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -19,7 +19,7 @@
  * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE. 
+ * SOFTWARE.
  *
  * @file      main.c
  * @brief     main source file
@@ -40,13 +40,14 @@
 #include "clock.h"
 #include "delay.h"
 #include "uart.h"
+#include "getopt.h"
 #include <stdlib.h>
 
 /**
  * @brief global var definition
  */
 uint8_t g_buf[256];        /**< uart buffer */
-uint16_t g_len;            /**< uart buffer length */
+volatile uint16_t g_len;   /**< uart buffer length */
 
 /**
  * @brief     at24cxx full function
@@ -60,461 +61,390 @@ uint16_t g_len;            /**< uart buffer length */
  */
 uint8_t at24cxx(uint8_t argc, char **argv)
 {
+    int c;
+    int longindex = 0;
+    const char short_options[] = "hipe:t:";
+    const struct option long_options[] =
+    {
+        {"help", no_argument, NULL, 'h'},
+        {"information", no_argument, NULL, 'i'},
+        {"port", no_argument, NULL, 'p'},
+        {"example", required_argument, NULL, 'e'},
+        {"test", required_argument, NULL, 't'},
+        {"addr", required_argument, NULL, 1},
+        {"data", required_argument, NULL, 2},
+        {"reg", required_argument, NULL, 3},
+        {"type", required_argument, NULL, 4},
+        {NULL, 0, NULL, 0},
+    };
+    char type[32] = "unknow";
+    uint8_t data = rand() % 0xFF;
+    uint16_t reg = 0x0000;
+    at24cxx_t chip_type = AT24C01;
+    at24cxx_address_t addr = AT24CXX_ADDRESS_A000;
+
+    /* if no params */
     if (argc == 1)
     {
+        /* goto the help */
         goto help;
     }
-    if (argc == 2)
+
+    /* init 0 */
+    optind = 0;
+
+    /* parse */
+    do
     {
-        if (strcmp("-i", argv[1]) == 0)
+        /* parse the args*/
+        c = getopt_long(argc, argv, short_options, long_options, &longindex);
+
+        /* judge the result */
+        switch (c)
         {
-            at24cxx_info_t info;
-            
-            /* print at24cxx info */
-            at24cxx_info(&info);
-            at24cxx_interface_debug_print("at24cxx: chip is %s.\n", info.chip_name);
-            at24cxx_interface_debug_print("at24cxx: manufacturer is %s.\n", info.manufacturer_name);
-            at24cxx_interface_debug_print("at24cxx: interface is %s.\n", info.interface);
-            at24cxx_interface_debug_print("at24cxx: driver version is %d.%d.\n", info.driver_version/1000, (info.driver_version%1000)/100);
-            at24cxx_interface_debug_print("at24cxx: min supply voltage is %0.1fV.\n", info.supply_voltage_min_v);
-            at24cxx_interface_debug_print("at24cxx: max supply voltage is %0.1fV.\n", info.supply_voltage_max_v);
-            at24cxx_interface_debug_print("at24cxx: max current is %0.2fmA.\n", info.max_current_ma);
-            at24cxx_interface_debug_print("at24cxx: max temperature is %0.1fC.\n", info.temperature_max);
-            at24cxx_interface_debug_print("at24cxx: min temperature is %0.1fC.\n", info.temperature_min);
-            
-            return 0;
-        }
-        else if (strcmp("-p", argv[1]) == 0)
-        {
-            /* print pin connection */
-            at24cxx_interface_debug_print("at24cxx: SCL connected to GPIOB PIN8.\n");
-            at24cxx_interface_debug_print("at24cxx: SDA connected to GPIOB PIN9.\n");
-            
-            return 0;
-        }
-        else if (strcmp("-h", argv[1]) == 0)
-        {
-            /* show at24cxx help */
-            
-            help:
-            
-            at24cxx_interface_debug_print("at24cxx -i\n\tshow at24cxx chip and driver information.\n");
-            at24cxx_interface_debug_print("at24cxx -h\n\tshow at24cxx help.\n");
-            at24cxx_interface_debug_print("at24cxx -p\n\tshow at24cxx pin connections of the current board.\n");
-            at24cxx_interface_debug_print("at24cxx -t read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)\n\t"
-                                          "run at24cxx read test.\n");
-            at24cxx_interface_debug_print("at24cxx -c read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7) <registeraddr>\n\t"
-                                          "run at24cxx read function.\n");
-            at24cxx_interface_debug_print("at24cxx -c write -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7) <registeraddr> <data>\n\t"
-                                          "run at24cxx write function.data is hexadecimal.\n");
-            
-            return 0;
-        }
-        else
-        {
-            return 5;
-        }
-    }
-    else if (argc == 7)
-    {
-        /* run test */
-        if (strcmp("-t", argv[1]) == 0)
-        {
-             /* read test */
-            if (strcmp("read", argv[2]) == 0)
+            /* help */
+            case 'h' :
             {
-                at24cxx_t type;
-                at24cxx_address_t address;
-                
-                if (strcmp("type", argv[3]) == 0)
-                {
-                    return 5;
-                }
-                if (strcmp("1", argv[4]) == 0)
-                {
-                    type = AT24C01;
-                }
-                else if (strcmp("2", argv[4]) == 0)
-                {
-                    type = AT24C02;
-                }
-                else if (strcmp("4", argv[4]) == 0)
-                {
-                    type = AT24C04;
-                }
-                else if (strcmp("8", argv[4]) == 0)
-                {
-                    type = AT24C08;
-                }
-                else if (strcmp("16", argv[4]) == 0)
-                {
-                    type = AT24C16;
-                }
-                else if (strcmp("32", argv[4]) == 0)
-                {
-                    type = AT24C32;
-                }
-                else if (strcmp("64", argv[4]) == 0)
-                {
-                    type = AT24C64;
-                }
-                else if (strcmp("128", argv[4]) == 0)
-                {
-                    type = AT24C128;
-                }
-                else if (strcmp("256", argv[4]) == 0)
-                {
-                    type = AT24C256;
-                }
-                else
-                {
-                    at24cxx_interface_debug_print("at24cxx: type is invalid.\n");
-                    
-                    return 5;
-                }
-                if (strcmp("a", argv[5]) == 0)
-                {
-                    return 5;
-                }
-                if ((argv[6][0]<'0') || argv[6][0]>'7')
-                {
-                    at24cxx_interface_debug_print("at24cxx: iic address is invalid.\n");
-                    
-                    return 5;
-                }
-                address = (at24cxx_address_t)atoi(argv[6]);
-                
-                /* run read test */
-                if (at24cxx_read_test(type, address) != 0)
-                {
-                    return 1;
-                }
-                else
-                {
-                    return 0;
-                }
+                /* set the type */
+                memset(type, 0, sizeof(char) * 32);
+                snprintf(type, 32, "h");
+
+                break;
             }
-            
-            /* param is invalid */
-            else
+
+            /* information */
+            case 'i' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 32);
+                snprintf(type, 32, "i");
+
+                break;
+            }
+
+            /* port */
+            case 'p' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 32);
+                snprintf(type, 32, "p");
+
+                break;
+            }
+
+            /* example */
+            case 'e' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 32);
+                snprintf(type, 32, "e_%s", optarg);
+
+                break;
+            }
+
+            /* test */
+            case 't' :
+            {
+                /* set the type */
+                memset(type, 0, sizeof(char) * 32);
+                snprintf(type, 32, "t_%s", optarg);
+
+                break;
+            }
+
+            /* addr */
+            case 1 :
+            {
+                /* set the addr pin */
+                if (strcmp("0", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A000;
+                }
+                else if (strcmp("1", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A001;
+                }
+                else if (strcmp("2", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A010;
+                }
+                else if (strcmp("3", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A011;
+                }
+                else if (strcmp("4", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A100;
+                }
+                else if (strcmp("5", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A101;
+                }
+                else if (strcmp("6", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A110;
+                }
+                else if (strcmp("7", optarg) == 0)
+                {
+                    addr = AT24CXX_ADDRESS_A111;
+                }
+                else
+                {
+                    return 5;
+                }
+
+                break;
+            }
+
+            /* data */
+            case 2 :
+            {
+                /* set the data */
+                if ((optarg[0] <= '9') && (optarg[0] >= '0'))
+                {
+                    data = (optarg[0] - '0') * 16;
+                }
+                else
+                {
+                    data = (optarg[0] - 'A' + 10) * 16;
+                }
+                if ((optarg[1] <= '9') && (optarg[1] >= '0'))
+                {
+                    data += (optarg[1] - '0');
+                }
+                else
+                {
+                    data += (optarg[1] - 'A' + 10);
+                }
+
+                break;
+            }
+
+            /* register */
+            case 3 :
+            {
+                if ((optarg[0] <= '9') && (optarg[0] >= '0'))
+                {
+                    reg = (optarg[0] - '0') * 16 * 16 *16;
+                }
+                else
+                {
+                    reg = (optarg[0] - 'A' + 10) * 16 * 16 *16;
+                }
+                if ((optarg[1] <= '9') && (optarg[1] >= '0'))
+                {
+                    reg += (optarg[1] - '0') * 16 * 16;
+                }
+                else
+                {
+                    reg += (optarg[1] - 'A' + 10) * 16 * 16;
+                }
+                if ((optarg[2] <= '9') && (optarg[2] >= '0'))
+                {
+                    reg += (optarg[2] - '0') * 16;
+                }
+                else
+                {
+                    reg += (optarg[2] - 'A' + 10) * 16;
+                }
+                if ((optarg[3] <= '9') && (optarg[3] >= '0'))
+                {
+                    reg += (optarg[3] - '0');
+                }
+                else
+                {
+                    reg += (optarg[3] - 'A' + 10);
+                }
+
+                break;
+            }
+
+            /* type */
+            case 4 :
+            {
+                if (strcmp("AT24C01", optarg) == 0)
+                {
+                    chip_type = AT24C01;
+                }
+                else if (strcmp("AT24C02", optarg) == 0)
+                {
+                    chip_type = AT24C02;
+                }
+                else if (strcmp("AT24C04", optarg) == 0)
+                {
+                    chip_type = AT24C04;
+                }
+                else if (strcmp("AT24C08", optarg) == 0)
+                {
+                    chip_type = AT24C08;
+                }
+                else if (strcmp("AT24C16", optarg) == 0)
+                {
+                    chip_type = AT24C16;
+                }
+                else if (strcmp("AT24C32", optarg) == 0)
+                {
+                    chip_type = AT24C32;
+                }
+                else if (strcmp("AT24C64", optarg) == 0)
+                {
+                    chip_type = AT24C64;
+                }
+                else if (strcmp("AT24C128", optarg) == 0)
+                {
+                    chip_type = AT24C128;
+                }
+                else if (strcmp("AT24C256", optarg) == 0)
+                {
+                    chip_type = AT24C256;
+                }
+                else
+                {
+                    return 5;
+                }
+
+                break;
+            }
+
+            /* the end */
+            case -1 :
+            {
+                break;
+            }
+
+            /* others */
+            default :
             {
                 return 5;
             }
         }
-        
-        /* param is invalid */
-        else
-        {
-            return 5;
-        }
-    }
-    else if (argc == 8)
+    } while (c != -1);
+
+    /* run the function */
+    if (strcmp("t_read", type) == 0)
     {
-        /* run function */
-        if (strcmp("-c", argv[1]) == 0)
+        /* run the read test */
+        if (at24cxx_read_test(chip_type, addr) != 0)
         {
-            /* read function */
-            if (strcmp("read", argv[2]) == 0)
-            {
-                uint8_t res;
-                uint8_t data;
-                uint16_t reg_address;
-                at24cxx_t type;
-                at24cxx_address_t address;
-                
-                if (strcmp("type", argv[3]) == 0)
-                {
-                    return 5;
-                }
-                if (strcmp("1", argv[4]) == 0)
-                {
-                    type = AT24C01;
-                }
-                else if (strcmp("2", argv[4]) == 0)
-                {
-                    type = AT24C02;
-                }
-                else if (strcmp("4", argv[4]) == 0)
-                {
-                    type = AT24C04;
-                }
-                else if (strcmp("8", argv[4]) == 0)
-                {
-                    type = AT24C08;
-                }
-                else if (strcmp("16", argv[4]) == 0)
-                {
-                    type = AT24C16;
-                }
-                else if (strcmp("32", argv[4]) == 0)
-                {
-                    type = AT24C32;
-                }
-                else if (strcmp("64", argv[4]) == 0)
-                {
-                    type = AT24C64;
-                }
-                else if (strcmp("128", argv[4]) == 0)
-                {
-                    type = AT24C128;
-                }
-                else if (strcmp("256", argv[4]) == 0)
-                {
-                    type = AT24C256;
-                }
-                else
-                {
-                    at24cxx_interface_debug_print("at24cxx: type is invalid.\n");
-                    
-                    return 5;
-                }
-                if (strcmp("a", argv[5]) == 0)
-                {
-                    return 5;
-                }
-                if ((argv[6][0]<'0') || argv[6][0]>'7')
-                {
-                    at24cxx_interface_debug_print("at24cxx: iic address is invalid.\n");
-                    
-                    return 5;
-                }
-                address = (at24cxx_address_t)atoi(argv[6]);
-                if (strlen(argv[7]) < 4)
-                {
-                    at24cxx_interface_debug_print("at24cxx: read address length must be 4.\n");
-                    
-                    return 5;
-                }
-                reg_address = 0;
-                if ((argv[7][0] <= '9') && (argv[7][0] >= '0'))
-                {
-                    reg_address = (argv[7][0] - '0') * 16 * 16 *16;
-                }
-                else
-                {
-                    reg_address = (argv[7][0] - 'A' + 10) * 16 * 16 *16;
-                }
-                if ((argv[7][1] <= '9') && (argv[7][1] >= '0'))
-                {
-                    reg_address += (argv[7][1] - '0') * 16 *16;
-                }
-                else
-                {
-                    reg_address += (argv[7][1] - 'A' + 10) * 16 * 16;
-                }
-                if ((argv[7][2] <= '9') && (argv[7][2] >= '0'))
-                {
-                    reg_address += (argv[7][2] - '0') * 16;
-                }
-                else
-                {
-                    reg_address += (argv[7][2] - 'A' + 10) * 16;
-                }
-                if ((argv[7][3] <= '9') && (argv[7][3] >= '0'))
-                {
-                    reg_address += (argv[7][3] - '0');
-                }
-                else
-                {
-                    reg_address += (argv[7][3] - 'A' + 10);
-                }
-                res = at24cxx_basic_init(type, address);
-                if (res != 0)
-                {
-                    return 1;
-                }
-                res = at24cxx_basic_read(reg_address, (uint8_t *)&data, 1);
-                if (res != 0)
-                {
-                    (void)at24cxx_basic_deinit();
-                    
-                    return 1;
-                }
-                else
-                {
-                    at24cxx_interface_debug_print("at24cxx: read 0x%04x is 0x%02X.\n", reg_address, data);
-                }
-                (void)at24cxx_basic_deinit();
-                
-                return 0;
-            }
-            
-            /* param is invalid */
-            else
-            {
-                return 5;
-            }
+            return 1;
         }
-        
-        /* param is invalid */
         else
         {
-            return 5;
+            return 0;
         }
     }
-    else if (argc == 9)
+    else if (strcmp("e_read", type) == 0)
     {
-        /* run function */
-        if (strcmp("-c", argv[1]) == 0)
+        uint8_t res;
+
+        /* basic init */
+        res = at24cxx_basic_init(chip_type, addr);
+        if (res != 0)
         {
-            /* write function */
-            if (strcmp("write", argv[2]) == 0)
-            {
-                uint8_t res;
-                uint8_t data;
-                uint16_t reg_address;
-                at24cxx_t type;
-                at24cxx_address_t address;
-                
-                if (strcmp("type", argv[3]) == 0)
-                {
-                    return 5;
-                }
-                if (strcmp("1", argv[4]) == 0)
-                {
-                    type = AT24C01;
-                }
-                else if (strcmp("2", argv[4]) == 0)
-                {
-                    type = AT24C02;
-                }
-                else if (strcmp("4", argv[4]) == 0)
-                {
-                    type = AT24C04;
-                }
-                else if (strcmp("8", argv[4]) == 0)
-                {
-                    type = AT24C08;
-                }
-                else if (strcmp("16", argv[4]) == 0)
-                {
-                    type = AT24C16;
-                }
-                else if (strcmp("32", argv[4]) == 0)
-                {
-                    type = AT24C32;
-                }
-                else if (strcmp("64", argv[4]) == 0)
-                {
-                    type = AT24C64;
-                }
-                else if (strcmp("128", argv[4]) == 0)
-                {
-                    type = AT24C128;
-                }
-                else if (strcmp("256", argv[4]) == 0)
-                {
-                    type = AT24C256;
-                }
-                else
-                {
-                    at24cxx_interface_debug_print("at24cxx: type is invalid.\n");
-                    
-                    return 5;
-                }
-                if (strcmp("a", argv[5]) == 0)
-                {
-                    return 5;
-                }
-                if ((argv[6][0]<'0') || argv[6][0]>'7')
-                {
-                    at24cxx_interface_debug_print("at24cxx: iic address is invalid.\n");
-                    
-                    return 5;
-                }
-                address = (at24cxx_address_t)atoi(argv[6]);
-                if (strlen(argv[7]) < 4)
-                {
-                    at24cxx_interface_debug_print("at24cxx: write address length must be 4.\n");
-                    
-                    return 5;
-                }
-                reg_address = 0;
-                if ((argv[7][0] <= '9') && (argv[7][0] >= '0'))
-                {
-                    reg_address = (argv[7][0] - '0') * 16 * 16 *16;
-                }
-                else
-                {
-                    reg_address = (argv[7][0] - 'A' + 10) * 16 * 16 *16;
-                }
-                if ((argv[7][1] <= '9') && (argv[7][1] >= '0'))
-                {
-                    reg_address += (argv[7][1] - '0') * 16 *16;
-                }
-                else
-                {
-                    reg_address += (argv[7][1] - 'A' + 10) * 16 * 16;
-                }
-                if ((argv[7][2] <= '9') && (argv[7][2] >= '0'))
-                {
-                    reg_address += (argv[7][2] - '0') * 16;
-                }
-                else
-                {
-                    reg_address += (argv[7][2] - 'A' + 10) * 16;
-                }
-                if ((argv[7][3] <= '9') && (argv[7][3] >= '0'))
-                {
-                    reg_address += (argv[7][3] - '0');
-                }
-                else
-                {
-                    reg_address += (argv[7][3] - 'A' + 10);
-                }
-                data = 0;
-                if ((argv[8][0] <= '9') && (argv[8][0] >= '0'))
-                {
-                    data += (argv[8][0] - '0') * 16;
-                }
-                else
-                {
-                    data += (argv[8][0] - 'A' + 10) * 16;
-                }
-                if ((argv[8][1] <= '9') && (argv[8][1] >= '0'))
-                {
-                    data += (argv[8][1] - '0');
-                }
-                else
-                {
-                    data += (argv[8][1] - 'A' + 10);
-                }
-                res = at24cxx_basic_init(type, address);
-                if (res != 0)
-                {
-                    return 1;
-                }
-                res = at24cxx_basic_write(reg_address, (uint8_t *)&data, 1);
-                if (res != 0)
-                {
-                    (void)at24cxx_basic_deinit();
-                    
-                    return 1;
-                }
-                else
-                {
-                    at24cxx_interface_debug_print("at24cxx: write 0x%04x is 0x%02X.\n", reg_address, data);
-                }
-                (void)at24cxx_basic_deinit();
-                
-                return 0;
-            }
-            
-            /* param is invalid */
-            else
-            {
-                return 5;
-            }
+            return 1;
         }
-        
-        /* param is invalid */
+
+        /* read data */
+        res = at24cxx_basic_read(reg, (uint8_t *)&data, 1);
+        if (res != 0)
+        {
+            (void)at24cxx_basic_deinit();
+
+            return 1;
+        }
         else
         {
-            return 5;
+            at24cxx_interface_debug_print("at24cxx: read 0x%04x is 0x%02X.\n", reg, data);
         }
+
+        /* deinit */
+        (void)at24cxx_basic_deinit();
+
+        return 0;
     }
-    
-    /* param is invalid */
+    else if (strcmp("e_write", type) == 0)
+    {
+        uint8_t res;
+
+        /* basic init */
+        res = at24cxx_basic_init(chip_type, addr);
+        if (res != 0)
+        {
+            return 1;
+        }
+
+        /* write data */
+        res = at24cxx_basic_write(reg, (uint8_t *)&data, 1);
+        if (res != 0)
+        {
+            (void)at24cxx_basic_deinit();
+
+            return 1;
+        }
+        else
+        {
+            at24cxx_interface_debug_print("at24cxx: write 0x%04x is 0x%02X.\n", reg, data);
+        }
+
+        /* deinit */
+        (void)at24cxx_basic_deinit();
+
+        return 0;
+    }
+    else if (strcmp("h", type) == 0)
+    {
+        help:
+        at24cxx_interface_debug_print("Usage:\n");
+        at24cxx_interface_debug_print("  at24cxx (-i | --information)\n");
+        at24cxx_interface_debug_print("  at24cxx (-h | --help)\n");
+        at24cxx_interface_debug_print("  at24cxx (-p | --port)\n");
+        at24cxx_interface_debug_print("  at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]\n");
+        at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]\n");
+        at24cxx_interface_debug_print("  at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]\n");
+        at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]\n");
+        at24cxx_interface_debug_print("  at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]\n");
+        at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]\n");
+        at24cxx_interface_debug_print("\n");
+        at24cxx_interface_debug_print("Options:\n");
+        at24cxx_interface_debug_print("      --addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>    Set the connection of the addr pin and the addr number is A2A1A0.([default: 0])\n");
+        at24cxx_interface_debug_print("      --data=<value>                            Set the sent data and it is hexadecimal.([default: random])\n");
+        at24cxx_interface_debug_print("  -e <read>, --example=<read>                   Run the driver example.\n");
+        at24cxx_interface_debug_print("  -h, --help                                    Show the help.\n");
+        at24cxx_interface_debug_print("  -i, --information                             Show the chip information.\n");
+        at24cxx_interface_debug_print("  -p, --port                                    Display the pin connections of the current board.\n");
+        at24cxx_interface_debug_print("      --reg=<address>                           Set the register address and it is hexadecimal.([default: 0x0000])\n");
+        at24cxx_interface_debug_print("  -t <read | write>, --test=<read | write>      Run the driver test.\n");
+        at24cxx_interface_debug_print("      --type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>\n");
+        at24cxx_interface_debug_print("                                                Set the chip type.([default: AT24C01])\n");
+
+        return 0;
+    }
+    else if (strcmp("i", type) == 0)
+    {
+        at24cxx_info_t info;
+
+        /* print at24cxx info */
+        at24cxx_info(&info);
+        at24cxx_interface_debug_print("at24cxx: chip is %s.\n", info.chip_name);
+        at24cxx_interface_debug_print("at24cxx: manufacturer is %s.\n", info.manufacturer_name);
+        at24cxx_interface_debug_print("at24cxx: interface is %s.\n", info.interface);
+        at24cxx_interface_debug_print("at24cxx: driver version is %d.%d.\n", info.driver_version / 1000, (info.driver_version % 1000) / 100);
+        at24cxx_interface_debug_print("at24cxx: min supply voltage is %0.1fV.\n", info.supply_voltage_min_v);
+        at24cxx_interface_debug_print("at24cxx: max supply voltage is %0.1fV.\n", info.supply_voltage_max_v);
+        at24cxx_interface_debug_print("at24cxx: max current is %0.2fmA.\n", info.max_current_ma);
+        at24cxx_interface_debug_print("at24cxx: max temperature is %0.1fC.\n", info.temperature_max);
+        at24cxx_interface_debug_print("at24cxx: min temperature is %0.1fC.\n", info.temperature_min);
+
+        return 0;
+    }
+    else if (strcmp("p", type) == 0)
+    {
+        /* print pin connection */
+        at24cxx_interface_debug_print("at24cxx: SCL connected to GPIOB PIN8.\n");
+        at24cxx_interface_debug_print("at24cxx: SDA connected to GPIOB PIN9.\n");
+
+        return 0;
+    }
     else
     {
         return 5;
@@ -528,26 +458,26 @@ uint8_t at24cxx(uint8_t argc, char **argv)
 int main(void)
 {
     uint8_t res;
-    
+
     /* stm32f407 clock init and hal init */
     clock_init();
-    
+
     /* delay init */
     delay_init();
-    
-    /* uart1 init */
-    uart1_init(115200);
-    
+
+    /* uart init */
+    uart_init(115200);
+
     /* shell init && register at24cxx fuction */
     shell_init();
     shell_register("at24cxx", at24cxx);
-    uart1_print("at24cxx: welcome to libdriver at24cxx.\n");
-    
+    uart_print("at24cxx: welcome to libdriver at24cxx.\n");
+
     while (1)
     {
         /* read uart */
-        g_len = uart1_read(g_buf, 256);
-        if (g_len)
+        g_len = uart_read(g_buf, 256);
+        if (g_len != 0)
         {
             /* run shell */
             res = shell_parse((char *)g_buf, g_len);
@@ -557,29 +487,29 @@ int main(void)
             }
             else if (res == 1)
             {
-                uart1_print("at24cxx: run failed.\n");
+                uart_print("at24cxx: run failed.\n");
             }
             else if (res == 2)
             {
-                uart1_print("at24cxx: unknow command.\n");
+                uart_print("at24cxx: unknow command.\n");
             }
             else if (res == 3)
             {
-                uart1_print("at24cxx: length is too long.\n");
+                uart_print("at24cxx: length is too long.\n");
             }
             else if (res == 4)
             {
-                uart1_print("at24cxx: pretreat failed.\n");
+                uart_print("at24cxx: pretreat failed.\n");
             }
             else if (res == 5)
             {
-                uart1_print("at24cxx: param is invalid.\n");
+                uart_print("at24cxx: param is invalid.\n");
             }
             else
             {
-                uart1_print("at24cxx: unknow status code.\n");
+                uart_print("at24cxx: unknow status code.\n");
             }
-            uart1_flush();
+            uart_flush();
         }
         delay_ms(100);
     }
