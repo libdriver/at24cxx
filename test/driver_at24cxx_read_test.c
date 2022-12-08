@@ -82,7 +82,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
         at24cxx_interface_debug_print("at24cxx: chip is %s.\n", info.chip_name);
         at24cxx_interface_debug_print("at24cxx: manufacturer is %s.\n", info.manufacturer_name);
         at24cxx_interface_debug_print("at24cxx: interface is %s.\n", info.interface);
-        at24cxx_interface_debug_print("at24cxx: driver version is %d.%d.\n", info.driver_version/1000, (info.driver_version%1000)/100);
+        at24cxx_interface_debug_print("at24cxx: driver version is %d.%d.\n", info.driver_version / 1000, (info.driver_version % 1000) / 100);
         at24cxx_interface_debug_print("at24cxx: min supply voltage is %0.1fV.\n", info.supply_voltage_min_v);
         at24cxx_interface_debug_print("at24cxx: max supply voltage is %0.1fV.\n", info.supply_voltage_max_v);
         at24cxx_interface_debug_print("at24cxx: max current is %0.2fmA.\n", info.max_current_ma);

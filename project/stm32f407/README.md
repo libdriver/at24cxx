@@ -2,47 +2,79 @@
 
 #### 1.1 Chip Info
 
-chip name : STM32F407ZGT6.
+Chip Name: STM32F407ZGT6.
 
-extern oscillator : 8MHz.
+Extern Oscillator : 8MHz.
 
-uart pin: TX/RX PA9/PA10.
+UART Pin: TX/RX PA9/PA10.
 
-iic pin: SCL/SDA PB8/PB9.
+IIC Pin: SCL/SDA PB8/PB9.
 
-### 2. Shell
+### 2. Development and Debugging
 
-#### 2.1 Shell Parameter
+#### 2.1 Integrated Development Environment
 
-baud rate: 115200.
+LidDriver provides both Keil and IAR integrated development environment projects.
 
-data bits : 8.
+MDK is the Keil ARM project and your Keil version must be 5 or higher.Keil ARM project needs STMicroelectronics STM32F4 Series Device Family Pack and you can download from https://www.keil.com/dd2/stmicroelectronics/stm32f407zgtx.
 
-stop bits: 1.
+EW is the IAR ARM project and your IAR version must be 9 or higher.
 
-parity: none.
+#### 2.2 Serial Port Parameter
 
-flow control: none.
+Baud Rate: 115200.
+
+Data Bits : 8.
+
+Stop Bits: 1.
+
+Parity: None.
+
+Flow Control: None.
+
+#### 2.3 Serial Port Assistant
+
+We use '\n' to wrap lines.If your serial port assistant displays exceptions (e.g. the displayed content does not divide lines), please modify the configuration of your serial port assistant or replace one that supports '\n' parsing.
 
 ### 3. AT24CXX
 
 #### 3.1 Command Instruction
 
-​          at24cxx is a basic command which can test all at24cxx driver function:
+1. Show at24cxx chip and driver information.
 
-​           -i          show at24cxx chip and driver information.
+   ```shell
+   at24cxx (-i | --information)
+   ```
 
-​           -h         show at24cxx help.
+2. Show at24cxx help.
 
-​           -p         show at24cxx pin connections of the current board.
+   ```shell
+   at24cxx (-h | --help)
+   ```
 
-​           -t  read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)         run at24cxx read test.
+3. Show at24cxx pin connections of the current board.
 
-​           -c (read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr>| write  -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr> <data>)
+   ```shell
+   at24cxx (-p | --port)
+   ```
 
-​           -c read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr>        run at24cxx read function.
+4. Run at24cxx read test, reg is the register address and it is hexadecimal.
 
-​           -c write -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)  <registeraddr> <data>        run at24cxx write function.data is hexadecimal.
+   ```shell
+   at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
+   ```
+
+5. Run at24cxx read function, reg is the register address and it is hexadecimal.
+
+   ```shell
+   at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]
+   ```
+
+6. Run at24cxx write function, reg is the register address and data is the set value, both are hexadecimal.
+
+   ```shell
+   at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]
+   ```
 
 #### 3.2 Command Example
 
@@ -68,7 +100,7 @@ at24cxx: SDA connected to GPIOB PIN9.
 ```
 
 ```shell
-at24cxx -t read -type 1 -a 0
+at24cxx -t read --type=AT24C01 --addr=0
 
 at24cxx: chip is Microchip AT24CXX.
 at24cxx: manufacturer is Microchip.
@@ -92,31 +124,41 @@ at24cxx: finish read test.
 ```
 
 ```shell
-at24cxx -c read -type 1 -a 0 0001
+at24cxx -e read --type=AT24C01 --addr=0 --reg=0001
 
-at24cxx: read 0x0001 is 0xB0.
+at24cxx: read 0x0001 is 0x53.
 ```
 
 ```shell
-at24cxx -c write -type 1 -a 0 0001 11 
+at24cxx -e write --type=AT24C01 --addr=0 --reg=0001 --data=15
 
-at24cxx: write 0x0001 is 0x11.
+at24cxx: write 0x0001 is 0x15.
 ```
 
 ```shell
 at24cxx -h
 
-at24cxx -i
-	show at24cxx chip and driver information.
-at24cxx -h
-	show at24cxx help.
-at24cxx -p
-	show at24cxx pin connections of the current board.
-at24cxx -t read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7)
-	run at24cxx read test.
-at24cxx -c read -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7) <registeraddr>
-	run at24cxx read function.
-at24cxx -c write -type (1 | 2 | 4 | 8 | 16 | 32 | 64 | 128 | 256) -a (0 | 1| 2 | 3 | 4 | 5 | 6 | 7) <registeraddr> <data>
-	run at24cxx write function.data is hexadecimal.
+Usage:
+  at24cxx (-i | --information)
+  at24cxx (-h | --help)
+  at24cxx (-p | --port)
+  at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
+  at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]
+  at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]
+
+Options:
+      --addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>    Set the connection of the addr pin and the addr number is A2A1A0.([default: 0])
+      --data=<value>                            Set the sent data and it is hexadecimal.([default: random])
+  -e <read>, --example=<read>                   Run the driver example.
+  -h, --help                                    Show the help.
+  -i, --information                             Show the chip information.
+  -p, --port                                    Display the pin connections of the current board.
+      --reg=<address>                           Set the register address and it is hexadecimal.([default: 0x0000])
+  -t <read | write>, --test=<read | write>      Run the driver test.
+      --type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>
+                                                Set the chip type.([default: AT24C01])
 ```
 

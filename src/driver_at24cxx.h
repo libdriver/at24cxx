@@ -94,12 +94,12 @@ typedef enum
 typedef struct at24cxx_handle_s
 {
     uint8_t iic_addr;                                                                              /**< iic device address */
-    uint8_t (*iic_init)(void);                                                                     /**< point to a iic_init function address */
-    uint8_t (*iic_deinit)(void);                                                                   /**< point to a iic_deinit function address */
-    uint8_t (*iic_read)(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);                    /**< point to a iic_read function address */
-    uint8_t (*iic_write)(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);                   /**< point to a iic_write function address */
-    uint8_t (*iic_read_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);         /**< point to a iic_read_address16 function address */
-    uint8_t (*iic_write_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);        /**< point to a iic_write_address16 function address */
+    uint8_t (*iic_init)(void);                                                                     /**< point to an iic_init function address */
+    uint8_t (*iic_deinit)(void);                                                                   /**< point to an iic_deinit function address */
+    uint8_t (*iic_read)(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);                    /**< point to an iic_read function address */
+    uint8_t (*iic_write)(uint8_t addr, uint8_t reg, uint8_t *buf, uint16_t len);                   /**< point to an iic_write function address */
+    uint8_t (*iic_read_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);         /**< point to an iic_read_address16 function address */
+    uint8_t (*iic_write_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);        /**< point to an iic_write_address16 function address */
     void (*delay_ms)(uint32_t ms);                                                                 /**< point to a delay_ms function address */
     void (*debug_print)(const char *const fmt, ...);                                               /**< point to a debug_print function address */
     uint16_t id;                                                                                   /**< chip id */
@@ -135,7 +135,7 @@ typedef struct at24cxx_info_s
 
 /**
  * @brief     initialize at24cxx_handle_t structure
- * @param[in] HANDLE points to a at24cxx handle structure
+ * @param[in] HANDLE points to an at24cxx handle structure
  * @param[in] STRUCTURE is at24cxx_handle_t
  * @note      none
  */
@@ -143,55 +143,55 @@ typedef struct at24cxx_info_s
 
 /**
  * @brief     link iic_init function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_init function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_init function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_INIT(HANDLE, FUC)             (HANDLE)->iic_init = FUC
 
 /**
  * @brief     link iic_deinit function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_deinit function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_deinit function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_DEINIT(HANDLE, FUC)           (HANDLE)->iic_deinit = FUC
 
 /**
  * @brief     link iic_read function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_read function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_read function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_READ(HANDLE, FUC)             (HANDLE)->iic_read = FUC
 
 /**
  * @brief     link iic_write function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_write function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_write function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_WRITE(HANDLE, FUC)            (HANDLE)->iic_write = FUC
 
 /**
  * @brief     link iic_read_address16 function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_read_address16 function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_read_address16 function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_READ_ADDRESS16(HANDLE, FUC)   (HANDLE)->iic_read_address16 = FUC
 
 /**
  * @brief     link iic_write_address16 function
- * @param[in] HANDLE points to a at24cxx handle structure
- * @param[in] FUC points to a iic_write_address16 function address
+ * @param[in] HANDLE points to an at24cxx handle structure
+ * @param[in] FUC points to an iic_write_address16 function address
  * @note      none
  */
 #define DRIVER_AT24CXX_LINK_IIC_WRITE_ADDRESS16(HANDLE, FUC)  (HANDLE)->iic_write_address16 = FUC
 
 /**
  * @brief     link delay_ms function
- * @param[in] HANDLE points to a at24cxx handle structure
+ * @param[in] HANDLE points to an at24cxx handle structure
  * @param[in] FUC points to a delay_ms function address
  * @note      none
  */
@@ -199,7 +199,7 @@ typedef struct at24cxx_info_s
 
 /**
  * @brief     link debug_print function
- * @param[in] HANDLE points to a at24cxx handle structure
+ * @param[in] HANDLE points to an at24cxx handle structure
  * @param[in] FUC points to a debug_print function address
  * @note      none
  */
@@ -218,7 +218,7 @@ typedef struct at24cxx_info_s
 
 /**
  * @brief      get chip's information
- * @param[out] *info points to a at24cxx info structure
+ * @param[out] *info points to an at24cxx info structure
  * @return     status code
  *             - 0 success
  *             - 2 handle is NULL
@@ -228,7 +228,7 @@ uint8_t at24cxx_info(at24cxx_info_t *info);
 
 /**
  * @brief     initialize the chip
- * @param[in] *handle points to a at24cxx handle structure
+ * @param[in] *handle points to an at24cxx handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic initialization failed
@@ -240,7 +240,7 @@ uint8_t at24cxx_init(at24cxx_handle_t *handle);
 
 /**
  * @brief     close the chip
- * @param[in] *handle points to a at24cxx handle structure
+ * @param[in] *handle points to an at24cxx handle structure
  * @return    status code
  *            - 0 success
  *            - 1 iic deinit failed
@@ -252,7 +252,7 @@ uint8_t at24cxx_deinit(at24cxx_handle_t *handle);
 
 /**
  * @brief     set the chip type
- * @param[in] *handle points to a at24cxx handle structure
+ * @param[in] *handle points to an at24cxx handle structure
  * @param[in] type is the chip type
  * @return    status code
  *            - 0 success
@@ -263,7 +263,7 @@ uint8_t at24cxx_set_type(at24cxx_handle_t *handle, at24cxx_t type);
 
 /**
  * @brief      get the chip type
- * @param[in]  *handle points to a at24cxx handle structure
+ * @param[in]  *handle points to an at24cxx handle structure
  * @param[out] *type points to a chip type buffer
  * @return     status code
  *             - 0 success
@@ -274,7 +274,7 @@ uint8_t at24cxx_get_type(at24cxx_handle_t *handle, at24cxx_t *type);
 
 /**
  * @brief     set the chip address pin
- * @param[in] *handle points to a at24cxx handle structure
+ * @param[in] *handle points to an at24cxx handle structure
  * @param[in] addr_pin is the chip address pin
  * @return    status code
  *            - 0 success
@@ -285,7 +285,7 @@ uint8_t at24cxx_set_addr_pin(at24cxx_handle_t *handle, at24cxx_address_t addr_pi
 
 /**
  * @brief      get the chip address pin
- * @param[in]  *handle points to a at24cxx handle structure
+ * @param[in]  *handle points to an at24cxx handle structure
  * @param[out] *addr_pin points to a chip address pin
  * @return     status code
  *             - 0 success
@@ -296,7 +296,7 @@ uint8_t at24cxx_get_addr_pin(at24cxx_handle_t *handle, at24cxx_address_t *addr_p
 
 /**
  * @brief      read bytes from the chip
- * @param[in]  *handle points to a at24cxx handle structure
+ * @param[in]  *handle points to an at24cxx handle structure
  * @param[in]  address is the register address
  * @param[out] *buf points to a data buffer
  * @param[in]  len is the buffer length
@@ -312,7 +312,7 @@ uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, u
 
 /**
  * @brief     write bytes to the chip
- * @param[in] *handle points to a at24cxx handle structure
+ * @param[in] *handle points to an at24cxx handle structure
  * @param[in] address is the register address
  * @param[in] *buf points to a data buffer
  * @param[in] len is the buffer length
