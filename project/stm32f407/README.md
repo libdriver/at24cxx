@@ -58,7 +58,7 @@ We use '\n' to wrap lines.If your serial port assistant displays exceptions (e.g
    at24cxx (-p | --port)
    ```
 
-4. Run at24cxx read test, reg is the register address and it is hexadecimal.
+4. Run at24cxx read test.
 
    ```shell
    at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
