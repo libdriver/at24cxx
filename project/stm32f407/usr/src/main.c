@@ -41,6 +41,7 @@
 #include "delay.h"
 #include "uart.h"
 #include "getopt.h"
+#include <math.h>
 #include <stdlib.h>
 
 /**
@@ -199,62 +200,127 @@ uint8_t at24cxx(uint8_t argc, char **argv)
             /* data */
             case 2 :
             {
-                /* set the data */
-                if ((optarg[0] <= '9') && (optarg[0] >= '0'))
-                {
-                    data = (optarg[0] - '0') * 16;
-                }
-                else
-                {
-                    data = (optarg[0] - 'A' + 10) * 16;
-                }
-                if ((optarg[1] <= '9') && (optarg[1] >= '0'))
-                {
-                    data += (optarg[1] - '0');
-                }
-                else
-                {
-                    data += (optarg[1] - 'A' + 10);
-                }
+                char *p;
+                uint16_t l;
+                uint16_t i;
+                uint64_t hex_data;
 
+                /* set the data */
+                l = strlen(optarg);
+
+                /* check the header */
+                if (l >= 2)
+                {
+                    if (strncmp(optarg, "0x", 2) == 0)
+                    {
+                        p = optarg + 2;
+                        l -= 2;
+                    }
+                    else if (strncmp(optarg, "0X", 2) == 0)
+                    {
+                        p = optarg + 2;
+                        l -= 2;
+                    }
+                    else
+                    {
+                        p = optarg;
+                    }
+                }
+                else
+                {
+                    p = optarg;
+                }
+                
+                /* init 0 */
+                hex_data = 0;
+
+                /* loop */
+                for (i = 0; i < l; i++)
+                {
+                    if ((p[i] <= '9') && (p[i] >= '0'))
+                    {
+                        hex_data += (p[i] - '0') * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else if ((p[i] <= 'F') && (p[i] >= 'A'))
+                    {
+                        hex_data += ((p[i] - 'A') + 10) * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else if ((p[i] <= 'f') && (p[i] >= 'a'))
+                    {
+                        hex_data += ((p[i] - 'a') + 10) * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else
+                    {
+                        return 5;
+                    }
+                }
+                
+                /* set the data */
+                data = hex_data & 0xFF;
+                
                 break;
             }
 
             /* register */
             case 3 :
             {
-                if ((optarg[0] <= '9') && (optarg[0] >= '0'))
+                char *p;
+                uint16_t l;
+                uint16_t i;
+                uint64_t hex_data;
+
+                /* set the data */
+                l = strlen(optarg);
+
+                /* check the header */
+                if (l >= 2)
                 {
-                    reg = (optarg[0] - '0') * 16 * 16 *16;
+                    if (strncmp(optarg, "0x", 2) == 0)
+                    {
+                        p = optarg + 2;
+                        l -= 2;
+                    }
+                    else if (strncmp(optarg, "0X", 2) == 0)
+                    {
+                        p = optarg + 2;
+                        l -= 2;
+                    }
+                    else
+                    {
+                        p = optarg;
+                    }
                 }
                 else
                 {
-                    reg = (optarg[0] - 'A' + 10) * 16 * 16 *16;
+                    p = optarg;
                 }
-                if ((optarg[1] <= '9') && (optarg[1] >= '0'))
+                
+                /* init 0 */
+                hex_data = 0;
+
+                /* loop */
+                for (i = 0; i < l; i++)
                 {
-                    reg += (optarg[1] - '0') * 16 * 16;
+                    if ((p[i] <= '9') && (p[i] >= '0'))
+                    {
+                        hex_data += (p[i] - '0') * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else if ((p[i] <= 'F') && (p[i] >= 'A'))
+                    {
+                        hex_data += ((p[i] - 'A') + 10) * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else if ((p[i] <= 'f') && (p[i] >= 'a'))
+                    {
+                        hex_data += ((p[i] - 'a') + 10) * (uint32_t)pow(16, l - i - 1);
+                    }
+                    else
+                    {
+                        return 5;
+                    }
                 }
-                else
-                {
-                    reg += (optarg[1] - 'A' + 10) * 16 * 16;
-                }
-                if ((optarg[2] <= '9') && (optarg[2] >= '0'))
-                {
-                    reg += (optarg[2] - '0') * 16;
-                }
-                else
-                {
-                    reg += (optarg[2] - 'A' + 10) * 16;
-                }
-                if ((optarg[3] <= '9') && (optarg[3] >= '0'))
-                {
-                    reg += (optarg[3] - '0');
-                }
-                else
-                {
-                    reg += (optarg[3] - 'A' + 10);
-                }
+                
+                /* set the data */
+                reg = hex_data & 0xFFFF;
 
                 break;
             }
