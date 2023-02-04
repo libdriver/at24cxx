@@ -68,7 +68,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
         {"type", required_argument, NULL, 4},
         {NULL, 0, NULL, 0},
     };
-    char type[33] = "unknow";
+    char type[33] = "unknown";
     uint8_t data = rand() % 0xFF;
     uint16_t reg = 0x0000;
     at24cxx_t chip_type = AT24C01;
@@ -534,7 +534,7 @@ int main(uint8_t argc, char **argv)
     }
     else
     {
-        at24cxx_interface_debug_print("at24cxx: unknow status code.\n");
+        at24cxx_interface_debug_print("at24cxx: unknown status code.\n");
     }
 
     return 0;
