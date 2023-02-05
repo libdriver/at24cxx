@@ -78,7 +78,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
         {"type", required_argument, NULL, 4},
         {NULL, 0, NULL, 0},
     };
-    char type[32] = "unknow";
+    char type[32] = "unknown";
     uint8_t data = rand() % 0xFF;
     uint16_t reg = 0x0000;
     at24cxx_t chip_type = AT24C01;
@@ -534,7 +534,7 @@ int main(void)
     /* uart init */
     uart_init(115200);
 
-    /* shell init && register at24cxx fuction */
+    /* shell init && register at24cxx function */
     shell_init();
     shell_register("at24cxx", at24cxx);
     uart_print("at24cxx: welcome to libdriver at24cxx.\n");
@@ -557,7 +557,7 @@ int main(void)
             }
             else if (res == 2)
             {
-                uart_print("at24cxx: unknow command.\n");
+                uart_print("at24cxx: unknown command.\n");
             }
             else if (res == 3)
             {
@@ -573,7 +573,7 @@ int main(void)
             }
             else
             {
-                uart_print("at24cxx: unknow status code.\n");
+                uart_print("at24cxx: unknown status code.\n");
             }
             uart_flush();
         }
