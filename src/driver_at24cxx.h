@@ -62,15 +62,15 @@ extern "C"{
  */
 typedef enum
 {
-    AT24C01  = 127,          /**< AT24C01 type */
-    AT24C02  = 255,          /**< AT24C02 type */
-    AT24C04  = 511,          /**< AT24C04 type */
-    AT24C08  = 1023,         /**< AT24C08 type */
-    AT24C16  = 2047,         /**< AT24C16 type */
-    AT24C32  = 4095,         /**< AT24C32 type */
-    AT24C64  = 8191,         /**< AT24C64 type */
-    AT24C128 = 16383,        /**< AT24C128 type */
-    AT24C256 = 32767,        /**< AT24C256 type */
+    AT24C01  = 128,          /**< AT24C01 type */
+    AT24C02  = 256,          /**< AT24C02 type */
+    AT24C04  = 512,          /**< AT24C04 type */
+    AT24C08  = 1024,         /**< AT24C08 type */
+    AT24C16  = 2048,         /**< AT24C16 type */
+    AT24C32  = 4096,         /**< AT24C32 type */
+    AT24C64  = 8192,         /**< AT24C64 type */
+    AT24C128 = 16384,        /**< AT24C128 type */
+    AT24C256 = 32768,        /**< AT24C256 type */
 } at24cxx_t;
 
 /**
