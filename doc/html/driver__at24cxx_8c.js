@@ -13,8 +13,8 @@ var driver__at24cxx_8c =
     [ "at24cxx_get_type", "group__at24cxx__base__driver.html#gaf38ace78431f9d766162960d88119fde", null ],
     [ "at24cxx_info", "group__at24cxx__base__driver.html#gae63f3f43d8972cddafc256c7049f1a3b", null ],
     [ "at24cxx_init", "group__at24cxx__base__driver.html#ga5a4546e035584df18c7cfa2e7346f905", null ],
-    [ "at24cxx_read", "group__at24cxx__base__driver.html#ga7fcc0abb483b527480a81f6b89e47d91", null ],
+    [ "at24cxx_read", "group__at24cxx__base__driver.html#ga9be17c4507f50c553c5c968f4bda32b4", null ],
     [ "at24cxx_set_addr_pin", "group__at24cxx__base__driver.html#gaf11abd0b4e0c0c66d23830896923089c", null ],
     [ "at24cxx_set_type", "group__at24cxx__base__driver.html#ga010fee3088dd876f85a9f62d3565ed80", null ],
-    [ "at24cxx_write", "group__at24cxx__base__driver.html#gac1839dc79648f15b71dcef049804914c", null ]
+    [ "at24cxx_write", "group__at24cxx__base__driver.html#gacf3a0ca14713ff25125f3f655a38f681", null ]
 ];

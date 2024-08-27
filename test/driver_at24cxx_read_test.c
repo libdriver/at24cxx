@@ -54,7 +54,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     uint8_t res, i, j;
     uint8_t buf[12];
     uint8_t buf_check[12];
-    uint16_t inc;
+    uint32_t inc;
     at24cxx_info_t info;
     
     /* link interface function */
@@ -119,7 +119,7 @@ uint8_t at24cxx_read_test(at24cxx_t type, at24cxx_address_t address)
     
     /* start read test */
     at24cxx_interface_debug_print("at24cxx: start read test.\n");
-    inc = ((uint16_t)type + 1) / 8;
+    inc = ((uint32_t)type + 1) / 8;
     for (i = 0; i < 8; i++)
     {
         for (j = 0; j < 12; j++)

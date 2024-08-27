@@ -95,19 +95,19 @@ find_package(at24cxx REQUIRED)
 4. Run at24cxx read test.
 
    ```shell
-   at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
+   at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 | AT24C512 | AT24C1024 | AT24C2048>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
    ```
 
 5. Run at24cxx read function, reg is the register address and it is hexadecimal.
 
    ```shell
-   at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]
+   at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 | AT24C512 | AT24C1024 | AT24C2048>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]
    ```
 
 6. Run at24cxx write function, reg is the register address and data is the set value, both are hexadecimal.
 
    ```shell
-   at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]
+   at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 | AT24C512 | AT24C1024 | AT24C2048>] [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]
    ```
 
 #### 3.2 Command Example
@@ -176,11 +176,14 @@ Usage:
   at24cxx (-i | --information)
   at24cxx (-h | --help)
   at24cxx (-p | --port)
-  at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+  at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |
+                                           AT24C512 | AT24C1024 | AT24C2048>]
           [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]
-  at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+  at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |
+                                              AT24C512 | AT24C1024 | AT24C2048>]
           [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]
-  at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>]
+  at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |
+                                                AT24C512 | AT24C1024 | AT24C2048>]
           [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]
 
 Options:
@@ -192,7 +195,8 @@ Options:
   -p, --port                                    Display the pin connections of the current board.
       --reg=<address>                           Set the register address and it is hexadecimal.([default: 0x0000])
   -t <read | write>, --test=<read | write>      Run the driver test.
-      --type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256>
+      --type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |
+              AT24C512 | AT24C1024 | AT24C2048>
                                                 Set the chip type.([default: AT24C01])
 ```
 

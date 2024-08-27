@@ -30,15 +30,18 @@ var driver__at24cxx_8h =
       [ "AT24C32", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6aa5e87b8e055900fcbf8a9794ba849163", null ],
       [ "AT24C64", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6ad8eaef3fc49dfd47b9c1d9a24a35836e", null ],
       [ "AT24C128", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6abe4281c90e65f39d7988b6a810fec697", null ],
-      [ "AT24C256", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a5143147d816929c8ddbaa57260e84850", null ]
+      [ "AT24C256", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a5143147d816929c8ddbaa57260e84850", null ],
+      [ "AT24C512", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a3b10ad5fddbc5779509c111e6fb9902b", null ],
+      [ "AT24C1024", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6aa241c3f190744c4cc9f57033be33da79", null ],
+      [ "AT24C2048", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a834f08170a3321687214a6409d15b306", null ]
     ] ],
     [ "at24cxx_deinit", "group__at24cxx__base__driver.html#gaa7d935791e5911b82e43628a8fe93a50", null ],
     [ "at24cxx_get_addr_pin", "group__at24cxx__base__driver.html#ga082ce35c4980eaf727f7b8603e2134bc", null ],
     [ "at24cxx_get_type", "group__at24cxx__base__driver.html#gaf38ace78431f9d766162960d88119fde", null ],
     [ "at24cxx_info", "group__at24cxx__base__driver.html#gae63f3f43d8972cddafc256c7049f1a3b", null ],
     [ "at24cxx_init", "group__at24cxx__base__driver.html#ga5a4546e035584df18c7cfa2e7346f905", null ],
-    [ "at24cxx_read", "group__at24cxx__base__driver.html#ga7fcc0abb483b527480a81f6b89e47d91", null ],
+    [ "at24cxx_read", "group__at24cxx__base__driver.html#ga9be17c4507f50c553c5c968f4bda32b4", null ],
     [ "at24cxx_set_addr_pin", "group__at24cxx__base__driver.html#gaf11abd0b4e0c0c66d23830896923089c", null ],
     [ "at24cxx_set_type", "group__at24cxx__base__driver.html#ga010fee3088dd876f85a9f62d3565ed80", null ],
-    [ "at24cxx_write", "group__at24cxx__base__driver.html#gac1839dc79648f15b71dcef049804914c", null ]
+    [ "at24cxx_write", "group__at24cxx__base__driver.html#gacf3a0ca14713ff25125f3f655a38f681", null ]
 ];

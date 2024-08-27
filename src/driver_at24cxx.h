@@ -62,15 +62,18 @@ extern "C"{
  */
 typedef enum
 {
-    AT24C01  = 128,          /**< AT24C01 type */
-    AT24C02  = 256,          /**< AT24C02 type */
-    AT24C04  = 512,          /**< AT24C04 type */
-    AT24C08  = 1024,         /**< AT24C08 type */
-    AT24C16  = 2048,         /**< AT24C16 type */
-    AT24C32  = 4096,         /**< AT24C32 type */
-    AT24C64  = 8192,         /**< AT24C64 type */
-    AT24C128 = 16384,        /**< AT24C128 type */
-    AT24C256 = 32768,        /**< AT24C256 type */
+    AT24C01   = 128,          /**< AT24C01 type */
+    AT24C02   = 256,          /**< AT24C02 type */
+    AT24C04   = 512,          /**< AT24C04 type */
+    AT24C08   = 1024,         /**< AT24C08 type */
+    AT24C16   = 2048,         /**< AT24C16 type */
+    AT24C32   = 4096,         /**< AT24C32 type */
+    AT24C64   = 8192,         /**< AT24C64 type */
+    AT24C128  = 16384,        /**< AT24C128 type */
+    AT24C256  = 32768,        /**< AT24C256 type */
+    AT24C512  = 65536,        /**< AT24C512 type */
+    AT24C1024 = 131072,       /**< AT24C1024 type */
+    AT24C2048 = 262144,       /**< AT24C2048 type */
 } at24cxx_t;
 
 /**
@@ -102,7 +105,7 @@ typedef struct at24cxx_handle_s
     uint8_t (*iic_write_address16)(uint8_t addr, uint16_t reg, uint8_t *buf, uint16_t len);        /**< point to an iic_write_address16 function address */
     void (*delay_ms)(uint32_t ms);                                                                 /**< point to a delay_ms function address */
     void (*debug_print)(const char *const fmt, ...);                                               /**< point to a debug_print function address */
-    uint16_t id;                                                                                   /**< chip id */
+    uint32_t id;                                                                                   /**< chip id */
     uint8_t inited;                                                                                /**< inited flag */
 } at24cxx_handle_t;
 
@@ -308,7 +311,7 @@ uint8_t at24cxx_get_addr_pin(at24cxx_handle_t *handle, at24cxx_address_t *addr_p
  *             - 4 end address is over the max address
  * @note       none
  */
-uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, uint16_t len);
+uint8_t at24cxx_read(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len);
 
 /**
  * @brief     write bytes to the chip
@@ -324,7 +327,7 @@ uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, u
  *            - 4 end address is over the max address
  * @note      none
  */
-uint8_t at24cxx_write(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, uint16_t len);
+uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len);
 
 /**
  * @}

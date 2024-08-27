@@ -103,7 +103,7 @@ uint8_t at24cxx_basic_init(at24cxx_t type, at24cxx_address_t address)
  *             - 1 read data failed
  * @note       none
  */
-uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len)
+uint8_t at24cxx_basic_read(uint32_t address, uint8_t *buf, uint16_t len)
 {
     /* read data */
     if (at24cxx_read(&gs_handle, address, buf, len) != 0)
@@ -126,7 +126,7 @@ uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len)
  *            - 1 write data failed
  * @note      none
  */
-uint8_t at24cxx_basic_write(uint16_t address, uint8_t *buf, uint16_t len)
+uint8_t at24cxx_basic_write(uint32_t address, uint8_t *buf, uint16_t len)
 {
     /* read data */
     if (at24cxx_write(&gs_handle, address, buf, len) != 0)
