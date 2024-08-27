@@ -1,3 +1,9 @@
+## 2.1.0 (2024-08-27)
+
+## Features
+
+- add new chip types
+
 ## 2.0.1 (2024-08-05)
 
 ## Bug Fixes

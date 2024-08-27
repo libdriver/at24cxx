@@ -81,7 +81,7 @@ uint8_t at24cxx_basic_deinit(void);
  *             - 1 read data failed
  * @note       none
  */
-uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len);
+uint8_t at24cxx_basic_read(uint32_t address, uint8_t *buf, uint16_t len);
 
 /**
  * @brief     basic example write
@@ -93,7 +93,7 @@ uint8_t at24cxx_basic_read(uint16_t address, uint8_t *buf, uint16_t len);
  *            - 1 write data failed
  * @note      none
  */
-uint8_t at24cxx_basic_write(uint16_t address, uint8_t *buf, uint16_t len);
+uint8_t at24cxx_basic_write(uint32_t address, uint8_t *buf, uint16_t len);
 
 /**
  * @}

@@ -171,7 +171,7 @@ uint8_t at24cxx_set_type(at24cxx_handle_t *handle, at24cxx_t type)
         return 2;                       /* return error */
     }
 
-    handle->id = (uint16_t)type;        /* set id */
+    handle->id = (uint32_t)type;        /* set id */
     
     return 0;                           /* success return 0 */
 }
@@ -254,7 +254,7 @@ uint8_t at24cxx_get_addr_pin(at24cxx_handle_t *handle, at24cxx_address_t *addr_p
  *             - 4 end address is over the max address
  * @note       none
  */
-uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, uint16_t len)
+uint8_t at24cxx_read(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len)
 {
     uint8_t page_remain;
     
@@ -278,11 +278,43 @@ uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, u
     {
         page_remain = (uint8_t)len;                                                                          /* set page remain */
     }
-    if (handle->id > (uint16_t)AT24C16)                                                                      /* choose id to set different address */
+    if (handle->id > (uint32_t)AT24C512)                                                                     /* choose id to set different address */
     {
         while (1)
         {
-            if (handle->iic_read_address16(handle->iic_addr, address, buf, page_remain) != 0)                /* read data */
+            if (handle->iic_read_address16((uint8_t)(handle->iic_addr + ((address / 65536) << 1)), 
+                                           address % 65536, buf,
+                                           page_remain) != 0)                                                /* read page */
+            {
+                handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
+               
+                return 1;                                                                                    /* return error */
+            }
+            if (page_remain == len)                                                                          /* check break */
+            {
+                break;                                                                                       /* break loop */
+            }
+            else
+            {
+                address += page_remain;                                                                      /* address increase */
+                buf += page_remain;                                                                          /* buffer point increase */
+                len -= page_remain;                                                                          /* length decrease */
+                if (len < 8)                                                                                 /* check length */
+                {
+                    page_remain = (uint8_t)len;                                                              /* set the reset length */
+                }
+                else
+                {
+                    page_remain = 8;                                                                         /* set page */
+                }
+            }
+        }
+    }
+    else if (handle->id > (uint32_t)AT24C16)                                                                 /* choose id to set different address */
+    {
+        while (1)
+        {
+            if (handle->iic_read_address16(handle->iic_addr, address % 65536, buf, page_remain) != 0)        /* read data */
             {
                 handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
                
@@ -357,7 +389,7 @@ uint8_t at24cxx_read(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, u
  *            - 4 end address is over the max address
  * @note      none
  */
-uint8_t at24cxx_write(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, uint16_t len)
+uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len)
 {
     uint8_t page_remain;
     
@@ -381,11 +413,44 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint16_t address, uint8_t *buf, 
     {
         page_remain = (uint8_t)len;                                                                           /* set page remain */
     }
-    if (handle->id > (uint16_t)AT24C16)                                                                       /* check id */
+    if (handle->id > (uint32_t)AT24C512)                                                                      /* check id */
     {
         while (1)
         {
-            if (handle->iic_write_address16(handle->iic_addr, address, buf, page_remain) != 0)                /* write data */
+            if (handle->iic_write_address16((uint8_t)(handle->iic_addr + ((address / 65536) << 1)), 
+                                            address % 65536, buf,
+                                            page_remain) != 0)                                                /* write page */
+            {
+                handle->debug_print("at24cxx: write failed.\n");                                              /* write failed */
+               
+                return 1;                                                                                     /* return error */
+            }
+            handle->delay_ms(6);                                                                              /* wait 6 ms */
+            if (page_remain == len)                                                                           /* check break */
+            {
+                break;                                                                                        /* break */
+            }
+            else
+            {
+                address += page_remain;                                                                       /* address increase */
+                buf += page_remain;                                                                           /* buffer point increase */
+                len -= page_remain;                                                                           /* length decrease */
+                if (len < 8)                                                                                  /* check length */
+                {
+                    page_remain = (uint8_t)len;                                                               /* set the rest length */
+                }
+                else
+                {
+                    page_remain = 8;                                                                          /* set page */
+                }
+            }
+        }
+    }
+    else if (handle->id > (uint32_t)AT24C16)                                                                  /* check id */
+    {
+        while (1)
+        {
+            if (handle->iic_write_address16(handle->iic_addr, address % 65536, buf, page_remain) != 0)        /* write data */
             {
                 handle->debug_print("at24cxx: write failed.\n");                                              /* write failed */
                

@@ -129,6 +129,9 @@ Enumerations</h2></td></tr>
 , <a class="el" href="group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6abe4281c90e65f39d7988b6a810fec697">AT24C128</a> = 16384
 , <br />
 &#160;&#160;<a class="el" href="group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a5143147d816929c8ddbaa57260e84850">AT24C256</a> = 32768
+, <a class="el" href="group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a3b10ad5fddbc5779509c111e6fb9902b">AT24C512</a> = 65536
+, <a class="el" href="group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6aa241c3f190744c4cc9f57033be33da79">AT24C1024</a> = 131072
+, <a class="el" href="group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a834f08170a3321687214a6409d15b306">AT24C2048</a> = 262144
 <br />
  }</td></tr>
 <tr class="memdesc:ga9c766092cbae272d7a902db55d5379d6"><td class="mdescLeft">&#160;</td><td class="mdescRight">at24cxx type enumeration definition  <a href="group__at24cxx__base__driver.html#ga9c766092cbae272d7a902db55d5379d6">More...</a><br /></td></tr>
@@ -171,12 +174,12 @@ Functions</h2></td></tr>
 <tr class="memitem:ga082ce35c4980eaf727f7b8603e2134bc"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__at24cxx__base__driver.html#ga082ce35c4980eaf727f7b8603e2134bc">at24cxx_get_addr_pin</a> (<a class="el" href="group__at24cxx__base__driver.html#gab70e9f403201aee6ee714d191d46e43c">at24cxx_handle_t</a> *handle, <a class="el" href="group__at24cxx__base__driver.html#gae225eba30027b078d15b2bef832da7ec">at24cxx_address_t</a> *addr_pin)</td></tr>
 <tr class="memdesc:ga082ce35c4980eaf727f7b8603e2134bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">get the chip address pin  <a href="group__at24cxx__base__driver.html#ga082ce35c4980eaf727f7b8603e2134bc">More...</a><br /></td></tr>
 <tr class="separator:ga082ce35c4980eaf727f7b8603e2134bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga7fcc0abb483b527480a81f6b89e47d91"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__at24cxx__base__driver.html#ga7fcc0abb483b527480a81f6b89e47d91">at24cxx_read</a> (<a class="el" href="group__at24cxx__base__driver.html#gab70e9f403201aee6ee714d191d46e43c">at24cxx_handle_t</a> *handle, uint16_t address, uint8_t *buf, uint16_t len)</td></tr>
-<tr class="memdesc:ga7fcc0abb483b527480a81f6b89e47d91"><td class="mdescLeft">&#160;</td><td class="mdescRight">read bytes from the chip  <a href="group__at24cxx__base__driver.html#ga7fcc0abb483b527480a81f6b89e47d91">More...</a><br /></td></tr>
-<tr class="separator:ga7fcc0abb483b527480a81f6b89e47d91"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gac1839dc79648f15b71dcef049804914c"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__at24cxx__base__driver.html#gac1839dc79648f15b71dcef049804914c">at24cxx_write</a> (<a class="el" href="group__at24cxx__base__driver.html#gab70e9f403201aee6ee714d191d46e43c">at24cxx_handle_t</a> *handle, uint16_t address, uint8_t *buf, uint16_t len)</td></tr>
-<tr class="memdesc:gac1839dc79648f15b71dcef049804914c"><td class="mdescLeft">&#160;</td><td class="mdescRight">write bytes to the chip  <a href="group__at24cxx__base__driver.html#gac1839dc79648f15b71dcef049804914c">More...</a><br /></td></tr>
-<tr class="separator:gac1839dc79648f15b71dcef049804914c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga9be17c4507f50c553c5c968f4bda32b4"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__at24cxx__base__driver.html#ga9be17c4507f50c553c5c968f4bda32b4">at24cxx_read</a> (<a class="el" href="group__at24cxx__base__driver.html#gab70e9f403201aee6ee714d191d46e43c">at24cxx_handle_t</a> *handle, uint32_t address, uint8_t *buf, uint16_t len)</td></tr>
+<tr class="memdesc:ga9be17c4507f50c553c5c968f4bda32b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">read bytes from the chip  <a href="group__at24cxx__base__driver.html#ga9be17c4507f50c553c5c968f4bda32b4">More...</a><br /></td></tr>
+<tr class="separator:ga9be17c4507f50c553c5c968f4bda32b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gacf3a0ca14713ff25125f3f655a38f681"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__at24cxx__base__driver.html#gacf3a0ca14713ff25125f3f655a38f681">at24cxx_write</a> (<a class="el" href="group__at24cxx__base__driver.html#gab70e9f403201aee6ee714d191d46e43c">at24cxx_handle_t</a> *handle, uint32_t address, uint8_t *buf, uint16_t len)</td></tr>
+<tr class="memdesc:gacf3a0ca14713ff25125f3f655a38f681"><td class="mdescLeft">&#160;</td><td class="mdescRight">write bytes to the chip  <a href="group__at24cxx__base__driver.html#gacf3a0ca14713ff25125f3f655a38f681">More...</a><br /></td></tr>
+<tr class="separator:gacf3a0ca14713ff25125f3f655a38f681"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>at24cxx base driver modules </p>
@@ -246,7 +249,7 @@ Functions</h2></td></tr>
 </td></tr>
 </table>
 
-<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8h_source.html#l00079">79</a> of file <a class="el" href="driver__at24cxx_8h_source.html">driver_at24cxx.h</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8h_source.html#l00082">82</a> of file <a class="el" href="driver__at24cxx_8h_source.html">driver_at24cxx.h</a>.</p>
 
 </div>
 </div>
@@ -281,6 +284,12 @@ Functions</h2></td></tr>
 <tr><td class="fieldname"><a id="gga9c766092cbae272d7a902db55d5379d6abe4281c90e65f39d7988b6a810fec697"></a>AT24C128&#160;</td><td class="fielddoc"><p>AT24C128 type </p>
 </td></tr>
 <tr><td class="fieldname"><a id="gga9c766092cbae272d7a902db55d5379d6a5143147d816929c8ddbaa57260e84850"></a>AT24C256&#160;</td><td class="fielddoc"><p>AT24C256 type </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c766092cbae272d7a902db55d5379d6a3b10ad5fddbc5779509c111e6fb9902b"></a>AT24C512&#160;</td><td class="fielddoc"><p>AT24C512 type </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c766092cbae272d7a902db55d5379d6aa241c3f190744c4cc9f57033be33da79"></a>AT24C1024&#160;</td><td class="fielddoc"><p>AT24C1024 type </p>
+</td></tr>
+<tr><td class="fieldname"><a id="gga9c766092cbae272d7a902db55d5379d6a834f08170a3321687214a6409d15b306"></a>AT24C2048&#160;</td><td class="fielddoc"><p>AT24C2048 type </p>
 </td></tr>
 </table>
 
@@ -445,7 +454,7 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8c_source.html#l00459">459</a> of file <a class="el" href="driver__at24cxx_8c_source.html">driver_at24cxx.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8c_source.html#l00524">524</a> of file <a class="el" href="driver__at24cxx_8c_source.html">driver_at24cxx.c</a>.</p>
 
 </div>
 </div>
@@ -485,8 +494,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="ga7fcc0abb483b527480a81f6b89e47d91"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ga7fcc0abb483b527480a81f6b89e47d91">&#9670;&nbsp;</a></span>at24cxx_read()</h2>
+<a id="ga9be17c4507f50c553c5c968f4bda32b4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ga9be17c4507f50c553c5c968f4bda32b4">&#9670;&nbsp;</a></span>at24cxx_read()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -500,7 +509,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
@@ -637,8 +646,8 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a id="gac1839dc79648f15b71dcef049804914c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#gac1839dc79648f15b71dcef049804914c">&#9670;&nbsp;</a></span>at24cxx_write()</h2>
+<a id="gacf3a0ca14713ff25125f3f655a38f681"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#gacf3a0ca14713ff25125f3f655a38f681">&#9670;&nbsp;</a></span>at24cxx_write()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -652,7 +661,7 @@ Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramtype">uint32_t&#160;</td>
           <td class="paramname"><em>address</em>, </td>
         </tr>
         <tr>
@@ -695,7 +704,7 @@ Functions</h2></td></tr>
 </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>none </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8c_source.html#l00360">360</a> of file <a class="el" href="driver__at24cxx_8c_source.html">driver_at24cxx.c</a>.</p>
+<p class="definition">Definition at line <a class="el" href="driver__at24cxx_8c_source.html#l00392">392</a> of file <a class="el" href="driver__at24cxx_8c_source.html">driver_at24cxx.c</a>.</p>
 
 </div>
 </div>
