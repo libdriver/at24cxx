@@ -47,8 +47,8 @@ var group__at24cxx__base__driver =
       [ "AT24C128", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6abe4281c90e65f39d7988b6a810fec697", null ],
       [ "AT24C256", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a5143147d816929c8ddbaa57260e84850", null ],
       [ "AT24C512", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a3b10ad5fddbc5779509c111e6fb9902b", null ],
-      [ "AT24C1024", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6aa241c3f190744c4cc9f57033be33da79", null ],
-      [ "AT24C2048", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a834f08170a3321687214a6409d15b306", null ]
+      [ "AT24CM01", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a12dfff6f3b8676c9f8ead260b516618b", null ],
+      [ "AT24CM02", "group__at24cxx__base__driver.html#gga9c766092cbae272d7a902db55d5379d6a679f6fcda027f88fcf29896ef4742b9f", null ]
     ] ],
     [ "at24cxx_deinit", "group__at24cxx__base__driver.html#gaa7d935791e5911b82e43628a8fe93a50", null ],
     [ "at24cxx_get_addr_pin", "group__at24cxx__base__driver.html#ga082ce35c4980eaf727f7b8603e2134bc", null ],
