@@ -1,3 +1,9 @@
+## 2.1.1 (2024-08-31)
+
+## Bug Fixes
+
+- fix enumeration errors
+
 ## 2.1.0 (2024-08-27)
 
 ## Features

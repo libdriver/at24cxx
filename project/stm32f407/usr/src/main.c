@@ -368,13 +368,13 @@ uint8_t at24cxx(uint8_t argc, char **argv)
                 {
                     chip_type = AT24C512;
                 }
-                else if (strcmp("AT24C1024", optarg) == 0)
+                else if (strcmp("AT24CM01", optarg) == 0)
                 {
-                    chip_type = AT24C1024;
+                    chip_type = AT24CM01;
                 }
-                else if (strcmp("AT24C2048", optarg) == 0)
+                else if (strcmp("AT24CM02", optarg) == 0)
                 {
-                    chip_type = AT24C2048;
+                    chip_type = AT24CM02;
                 }
                 else
                 {
@@ -477,13 +477,13 @@ uint8_t at24cxx(uint8_t argc, char **argv)
         at24cxx_interface_debug_print("  at24cxx (-h | --help)\n");
         at24cxx_interface_debug_print("  at24cxx (-p | --port)\n");
         at24cxx_interface_debug_print("  at24cxx (-t read | --test=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |\n");
-        at24cxx_interface_debug_print("                                           AT24C512 | AT24C1024 | AT24C2048>]\n");
+        at24cxx_interface_debug_print("                                           AT24C512 | AT24CM01 | AT24CM02>]\n");
         at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>]\n");
         at24cxx_interface_debug_print("  at24cxx (-e read | --example=read) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |\n");
-        at24cxx_interface_debug_print("                                              AT24C512 | AT24C1024 | AT24C2048>]\n");
+        at24cxx_interface_debug_print("                                              AT24C512 | AT24CM01 | AT24CM02>]\n");
         at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>]\n");
         at24cxx_interface_debug_print("  at24cxx (-e write | --example=write) [--type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |\n");
-        at24cxx_interface_debug_print("                                                AT24C512 | AT24C1024 | AT24C2048>]\n");
+        at24cxx_interface_debug_print("                                                AT24C512 | AT24CM01 | AT24CM02>]\n");
         at24cxx_interface_debug_print("          [--addr=<0 | 1 | 2 | 3 | 4 | 5 | 6 | 7>] [--reg=<address>] [--data=<value>]\n");
         at24cxx_interface_debug_print("\n");
         at24cxx_interface_debug_print("Options:\n");
@@ -496,7 +496,7 @@ uint8_t at24cxx(uint8_t argc, char **argv)
         at24cxx_interface_debug_print("      --reg=<address>                           Set the register address and it is hexadecimal.([default: 0x0000])\n");
         at24cxx_interface_debug_print("  -t <read | write>, --test=<read | write>      Run the driver test.\n");
         at24cxx_interface_debug_print("      --type=<AT24C01 | AT24C02 | AT24C04 | AT24C08 | AT24C16 | AT24C32 | AT24C64 | AT24C128 | AT24C256 |\n");
-        at24cxx_interface_debug_print("              AT24C512 | AT24C1024 | AT24C2048>\n");
+        at24cxx_interface_debug_print("              AT24C512 | AT24CM01 | AT24CM02>\n");
         at24cxx_interface_debug_print("                                                Set the chip type.([default: AT24C01])\n");
 
         return 0;
