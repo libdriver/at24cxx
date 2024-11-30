@@ -42,8 +42,8 @@ static at24cxx_handle_t gs_handle;        /**< at24cxx handle */
 
 /**
  * @brief     read test
- * @param[in] type is the chip type
- * @param[in] address is the chip address pin
+ * @param[in] type chip type
+ * @param[in] address chip address pin
  * @return    status code
  *            - 0 success
  *            - 1 test failed

@@ -317,7 +317,7 @@ Functions</h2></td></tr>
 <p>close the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -363,8 +363,8 @@ Functions</h2></td></tr>
 <p>get the chip address pin </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*addr_pin</td><td>points to a chip address pin </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*addr_pin</td><td>pointer to a chip address pin </td></tr>
   </table>
   </dd>
 </dl>
@@ -408,8 +408,8 @@ Functions</h2></td></tr>
 <p>get the chip type </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*type</td><td>points to a chip type buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*type</td><td>pointer to a chip type buffer </td></tr>
   </table>
   </dd>
 </dl>
@@ -443,7 +443,7 @@ Functions</h2></td></tr>
 <p>get chip's information </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">*info</td><td>points to an at24cxx info structure </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*info</td><td>pointer to an at24cxx info structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -477,7 +477,7 @@ Functions</h2></td></tr>
 <p>initialize the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
   </table>
   </dd>
 </dl>
@@ -535,10 +535,10 @@ Functions</h2></td></tr>
 <p>read bytes from the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>is the register address </td></tr>
-    <tr><td class="paramdir">[out]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the buffer length </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>register address </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">*buf</td><td>pointer to a data buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>buffer length </td></tr>
   </table>
   </dd>
 </dl>
@@ -585,8 +585,8 @@ Functions</h2></td></tr>
 <p>set the chip address pin </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">addr_pin</td><td>is the chip address pin </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">addr_pin</td><td>chip address pin </td></tr>
   </table>
   </dd>
 </dl>
@@ -630,8 +630,8 @@ Functions</h2></td></tr>
 <p>set the chip type </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>is the chip type </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">type</td><td>chip type </td></tr>
   </table>
   </dd>
 </dl>
@@ -687,10 +687,10 @@ Functions</h2></td></tr>
 <p>write bytes to the chip </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>points to an at24cxx handle structure </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>is the register address </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>points to a data buffer </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>is the buffer length </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*handle</td><td>pointer to an at24cxx handle structure </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">address</td><td>register address </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">*buf</td><td>pointer to a data buffer </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">len</td><td>buffer length </td></tr>
   </table>
   </dd>
 </dl>

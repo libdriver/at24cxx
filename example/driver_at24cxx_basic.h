@@ -53,8 +53,8 @@ extern "C"{
 
 /**
  * @brief     basic example init
- * @param[in] type is the chip type
- * @param[in] address is the chip address pin
+ * @param[in] type chip type
+ * @param[in] address chip address pin
  * @return    status code
  *            - 0 success
  *            - 1 init failed
@@ -73,9 +73,9 @@ uint8_t at24cxx_basic_deinit(void);
 
 /**
  * @brief      basic example read
- * @param[in]  address is the register address
- * @param[out] *buf points to a data buffer
- * @param[in]  len is the buffer length
+ * @param[in]  address register address
+ * @param[out] *buf pointer to a data buffer
+ * @param[in]  len buffer length
  * @return     status code
  *             - 0 success
  *             - 1 read data failed
@@ -85,9 +85,9 @@ uint8_t at24cxx_basic_read(uint32_t address, uint8_t *buf, uint16_t len);
 
 /**
  * @brief     basic example write
- * @param[in] address is the register address
- * @param[in] *buf points to a data buffer
- * @param[in] len is the buffer length
+ * @param[in] address register address
+ * @param[in] *buf pointer to a data buffer
+ * @param[in] len buffer length
  * @return    status code
  *            - 0 success
  *            - 1 write data failed
