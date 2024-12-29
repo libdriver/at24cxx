@@ -53,8 +53,8 @@ extern "C"{
 
 /**
  * @brief     read test
- * @param[in] type is the chip type
- * @param[in] address is the chip address pin
+ * @param[in] type chip type
+ * @param[in] address chip address pin
  * @return    status code
  *            - 0 success
  *            - 1 test failed
