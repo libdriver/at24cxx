@@ -1,3 +1,9 @@
+## 2.1.4 (2025-01-15)
+
+## Bug Fixes
+
+- fix read && write errors
+
 ## 2.1.3 (2025-01-05)
 
 ## Bug Fixes
