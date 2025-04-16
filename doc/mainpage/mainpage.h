@@ -1,10 +1,10 @@
 /**
  * @mainpage  LibDriver AT24CXX
- * @brief     LibDriver AT24CXX is a full function driver of AT24CXX and it can run in both MCU and Linux platform.
+ * @brief     LibDriver AT24CXX is a full-featured driver of AT24CXX and it can run in both MCU and Linux platform.
  * @version   2.0.0
  * @author    Shifeng Li
  *
- * <h3>history</h3>
+ * <h3>History</h3>
  * <table>
  * <tr><th>Date        <th>Version  <th>Author      <th>Description
  * <tr><td>2021/02/17  <td>2.0      <td>Shifeng Li  <td>format the code

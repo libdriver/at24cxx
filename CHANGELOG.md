@@ -1,3 +1,9 @@
+## 2.1.6 (2025-04-16)
+
+## Bug Fixes
+
+- fix doc errors
+
 ## 2.1.5 (2025-03-02)
 
 ## Bug Fixes
