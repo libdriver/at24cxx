@@ -128,7 +128,7 @@ uint8_t at24cxx_basic_read(uint32_t address, uint8_t *buf, uint16_t len)
  */
 uint8_t at24cxx_basic_write(uint32_t address, uint8_t *buf, uint16_t len)
 {
-    /* read data */
+    /* write data */
     if (at24cxx_write(&gs_handle, address, buf, len) != 0)
     {
         return 1;

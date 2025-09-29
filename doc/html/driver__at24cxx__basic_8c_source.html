@@ -152,7 +152,7 @@ $(document).ready(function(){initNavTree('driver__at24cxx__basic_8c_source.html'
 <div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160; </div>
 <div class="line"><a name="l00129"></a><span class="lineno"><a class="line" href="group__at24cxx__example__driver.html#gaa02898549a780a296da7e25444a374f0">  129</a></span>&#160;uint8_t <a class="code" href="group__at24cxx__example__driver.html#gaa02898549a780a296da7e25444a374f0">at24cxx_basic_write</a>(uint32_t address, uint8_t *buf, uint16_t len)</div>
 <div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;{</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">/* read data */</span></div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;    <span class="comment">/* write data */</span></div>
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;    <span class="keywordflow">if</span> (<a class="code" href="group__at24cxx__base__driver.html#gacf3a0ca14713ff25125f3f655a38f681">at24cxx_write</a>(&amp;gs_handle, address, buf, len) != 0)</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    {</div>
 <div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;        <span class="keywordflow">return</span> 1;</div>
