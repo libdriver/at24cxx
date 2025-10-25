@@ -1,3 +1,9 @@
+## 2.1.8 (2025-10-26)
+
+## Features
+
+- update doxygen
+
 ## 2.1.7 (2025-09-30)
 
 ## Bug Fixes
