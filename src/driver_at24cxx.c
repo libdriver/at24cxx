@@ -376,7 +376,7 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, 
     {
         handle->debug_print("at24cxx: write out of range.\n");                                                /* write out of range */
        
-        return 1;                                                                                             /* return error */
+        return 4;                                                                                             /* return error */
     }
     page_remain = (uint8_t)(8 - address % 8);                                                                 /* set page remain */
     if (len <= page_remain)                                                                                   /* check length */
