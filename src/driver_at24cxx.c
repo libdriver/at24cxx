@@ -256,93 +256,44 @@ uint8_t at24cxx_get_addr_pin(at24cxx_handle_t *handle, at24cxx_address_t *addr_p
  */
 uint8_t at24cxx_read(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len)
 {
-    uint8_t page_remain;
-    
-    if (handle == NULL)                                                                                      /* check handle */
+    if (handle == NULL)                                                                                  /* check handle */
     {
-        return 2;                                                                                            /* return error */
+        return 2;                                                                                        /* return error */
     }
-    if (handle->inited != 1)                                                                                 /* check handle initialization */
+    if (handle->inited != 1)                                                                             /* check handle initialization */
     {
-        return 3;                                                                                            /* return error */
+        return 3;                                                                                        /* return error */
+    }
+    if ((address + len) > handle->id)                                                                    /* check length */
+    {
+        handle->debug_print("at24cxx: read out of range.\n");                                            /* read out of range */
+       
+        return 4;                                                                                        /* return error */
     }
 
-    if ((address + len) > handle->id)                                                                        /* check length */
+    if (handle->id > (uint32_t)AT24C16)                                                                  /* choose id to set different address */
     {
-        handle->debug_print("at24cxx: read out of range.\n");                                                /* read out of range */
-       
-        return 4;                                                                                            /* return error */
-    }
-    page_remain = (uint8_t)(8 - address % 8);                                                                /* get page remain */
-    if (len <= page_remain)                                                                                  /* page remain */
-    {
-        page_remain = (uint8_t)len;                                                                          /* set page remain */
-    }
-    if (handle->id > (uint32_t)AT24C16)                                                                      /* choose id to set different address */
-    {
-        while (1)
+        if (handle->iic_read_address16((uint8_t)(handle->iic_addr + ((address / 65536) << 1)), 
+                                        address % 65536, buf,
+                                        len) != 0)                                                       /* read data */
         {
-            if (handle->iic_read_address16((uint8_t)(handle->iic_addr + ((address / 65536) << 1)), 
-                                           address % 65536, buf,
-                                           page_remain) != 0)                                                /* read page */
-            {
-                handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
-               
-                return 1;                                                                                    /* return error */
-            }
-            if (page_remain == len)                                                                          /* check break */
-            {
-                break;                                                                                       /* break loop */
-            }
-            else
-            {
-                address += page_remain;                                                                      /* address increase */
-                buf += page_remain;                                                                          /* buffer point increase */
-                len -= page_remain;                                                                          /* length decrease */
-                if (len < 8)                                                                                 /* check length */
-                {
-                    page_remain = (uint8_t)len;                                                              /* set the reset length */
-                }
-                else
-                {
-                    page_remain = 8;                                                                         /* set page */
-                }
-            }
+            handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
+           
+            return 1;                                                                                    /* return error */
         }
     }
     else
     {
-        while (1)
+        if (handle->iic_read((uint8_t)(handle->iic_addr + ((address / 256) << 1)), address % 256, 
+                              buf, len) != 0)                                                            /* read data */
         {
-            if (handle->iic_read((uint8_t)(handle->iic_addr + ((address / 256) << 1)), address % 256, buf,
-                                  page_remain) != 0)                                                         /* read page */
-            {
-                handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
-               
-                return 1;                                                                                    /* return error */
-            }
-            if (page_remain == len)                                                                          /* check break */
-            {
-                break;                                                                                       /* break loop */
-            }
-            else
-            {
-                address += page_remain;                                                                      /* address increase */
-                buf += page_remain;                                                                          /* buffer point increase */
-                len -= page_remain;                                                                          /* length decrease */
-                if (len < 8)                                                                                 /* check length */
-                {
-                    page_remain = (uint8_t)len;                                                              /* set the reset length */
-                }
-                else
-                {
-                    page_remain = 8;                                                                         /* set page */
-                }
-            }
+            handle->debug_print("at24cxx: read failed.\n");                                              /* read failed */
+           
+            return 1;                                                                                    /* return error */
         }
     }
     
-    return 0;                                                                                                /* success return 0 */
+    return 0;                                                                                            /* success return 0 */
 }
 
 /**
@@ -361,7 +312,9 @@ uint8_t at24cxx_read(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, u
  */
 uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, uint16_t len)
 {
-    uint8_t page_remain;
+    uint16_t page_remain;
+    uint16_t page_div;
+    uint16_t page_delay_ms;
     
     if (handle == NULL)                                                                                       /* check handle */
     {
@@ -371,31 +324,126 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, 
     {
         return 3;                                                                                             /* return error */
     }
-
     if ((address + len) > handle->id)                                                                         /* check length */
     {
         handle->debug_print("at24cxx: write out of range.\n");                                                /* write out of range */
        
         return 4;                                                                                             /* return error */
     }
-    page_remain = (uint8_t)(8 - address % 8);                                                                 /* set page remain */
+    
+    switch ((uint32_t)handle->id)                                                                             /* choose id */
+    {
+        case AT24C01 :                                                                                        /* 01 */
+        {
+            page_div = 8;                                                                                     /* 8 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C02 :                                                                                        /* 02 */
+        {
+            page_div = 8;                                                                                     /* 8 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C04 :                                                                                        /* 04 */
+        {
+            page_div = 16;                                                                                    /* 16 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C08 :                                                                                        /* 08 */
+        {
+            page_div = 16;                                                                                    /* 16 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C16 :                                                                                        /* 16 */
+        {
+            page_div = 16;                                                                                    /* 16 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C32 :                                                                                        /* 32 */
+        {
+            page_div = 32;                                                                                    /* 32 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C64 :                                                                                        /* 64 */
+        {
+            page_div = 32;                                                                                    /* 32 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C128 :                                                                                       /* 128 */
+        {
+            page_div = 64;                                                                                    /* 64 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C256 :                                                                                       /* 256 */
+        {
+            page_div = 64;                                                                                    /* 64 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24C512 :                                                                                       /* 512 */
+        {
+            page_div = 128;                                                                                   /* 128 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24CM01 :                                                                                       /* cm01 */
+        {
+            page_div = 256;                                                                                   /* 256 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+        case AT24CM02 :                                                                                       /* cm02 */
+        {
+            page_div = 256;                                                                                   /* 256 bytes */
+            page_delay_ms = 11;                                                                               /* 11 ms */
+            
+            break;                                                                                            /* break */
+        }
+        default :                                                                                             /* default */
+        {
+            page_div = 8;                                                                                     /* 8 bytes */
+            page_delay_ms = 6;                                                                                /* 6 ms */
+            
+            break;                                                                                            /* break */
+        }
+    }
+    
+    page_remain = (uint16_t)(page_div - address % page_div);                                                  /* set page remain */
     if (len <= page_remain)                                                                                   /* check length */
     {
-        page_remain = (uint8_t)len;                                                                           /* set page remain */
+        page_remain = (uint16_t)len;                                                                          /* set page remain */
     }
     if (handle->id > (uint32_t)AT24C16)                                                                       /* check id */
     {
         while (1)
         {
             if (handle->iic_write_address16((uint8_t)(handle->iic_addr + ((address / 65536) << 1)), 
-                                            address % 65536, buf,
-                                            page_remain) != 0)                                                /* write page */
+                                             address % 65536, buf,
+                                             page_remain) != 0)                                               /* write page */
             {
                 handle->debug_print("at24cxx: write failed.\n");                                              /* write failed */
                
                 return 1;                                                                                     /* return error */
             }
-            handle->delay_ms(6);                                                                              /* wait 6 ms */
+            handle->delay_ms(page_delay_ms);                                                                  /* wait ok */
             if (page_remain == len)                                                                           /* check break */
             {
                 break;                                                                                        /* break */
@@ -405,13 +453,13 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, 
                 address += page_remain;                                                                       /* address increase */
                 buf += page_remain;                                                                           /* buffer point increase */
                 len -= page_remain;                                                                           /* length decrease */
-                if (len < 8)                                                                                  /* check length */
+                if (len < page_div)                                                                           /* check length */
                 {
-                    page_remain = (uint8_t)len;                                                               /* set the rest length */
+                    page_remain = (uint16_t)len;                                                              /* set the rest length */
                 }
                 else
                 {
-                    page_remain = 8;                                                                          /* set page */
+                    page_remain = page_div;                                                                   /* set page */
                 }
             }
         }
@@ -421,13 +469,13 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, 
         while (1)
         {
             if (handle->iic_write((uint8_t)(handle->iic_addr + ((address / 256) << 1)), address % 256, buf,
-                                  page_remain) != 0)                                                          /* write page */
+                                   page_remain) != 0)                                                         /* write page */
             {
                 handle->debug_print("at24cxx: write failed.\n");                                              /* write failed */
                
                 return 1;                                                                                     /* return error */
             }
-            handle->delay_ms(6);                                                                              /* wait 6 ms */
+            handle->delay_ms(page_delay_ms);                                                                  /* wait ok */
             if (page_remain == len)                                                                           /* check break */
             {
                 break;                                                                                        /* break */
@@ -437,13 +485,13 @@ uint8_t at24cxx_write(at24cxx_handle_t *handle, uint32_t address, uint8_t *buf, 
                 address += page_remain;                                                                       /* address increase */
                 buf += page_remain;                                                                           /* buffer point increase */
                 len -= page_remain;                                                                           /* length decrease */
-                if (len < 8)                                                                                  /* check length */
+                if (len < page_div)                                                                           /* check length */
                 {
-                    page_remain = (uint8_t)len;                                                               /* set the rest length */
+                    page_remain = (uint16_t)len;                                                              /* set the rest length */
                 }
                 else
                 {
-                    page_remain = 8;                                                                          /* set page */
+                    page_remain = page_div;                                                                   /* set page */
                 }
             }
         }
@@ -474,8 +522,8 @@ uint8_t at24cxx_info(at24cxx_info_t *info)
     info->supply_voltage_min_v = SUPPLY_VOLTAGE_MIN;                /* set minimal supply voltage */
     info->supply_voltage_max_v = SUPPLY_VOLTAGE_MAX;                /* set maximum supply voltage */
     info->max_current_ma = MAX_CURRENT;                             /* set maximum current */
-    info->temperature_max = TEMPERATURE_MAX;                        /* set minimal temperature */
-    info->temperature_min = TEMPERATURE_MIN;                        /* set maximum temperature */
+    info->temperature_max = TEMPERATURE_MAX;                        /* set maximum temperature */
+    info->temperature_min = TEMPERATURE_MIN;                        /* set minimal temperature */
     info->driver_version = DRIVER_VERSION;                          /* set driver version */
     
     return 0;                                                       /* success return 0 */
